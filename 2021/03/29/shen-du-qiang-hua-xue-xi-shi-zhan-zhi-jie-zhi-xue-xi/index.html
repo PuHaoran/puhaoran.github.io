@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="keywords" content="深度强化学习实战之价值学习, 算法策略，深度思考，深度学习，个人成长">
     <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | 深度实验室</title>
+    <title>深度强化学习实战之价值学习 | 深度实验室</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -259,12 +259,12 @@ if (windowWidth > 768) {
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">深度强化学习实战之价值学习</h1>
                 </div>
             </div>
         </div>
@@ -378,12 +378,25 @@ if (windowWidth > 768) {
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98/">
+                                <span class="chip bg-color">深度强化学习实战</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                强化学习
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -392,7 +405,7 @@ if (windowWidth > 768) {
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-20
+                    2021-03-29
                 </div>
                 
 
@@ -413,19 +426,43 @@ if (windowWidth > 768) {
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><h5 id="Return"><a href="#Return" class="headerlink" title="Return"></a>Return</h5><p>回报，未来的累计奖励。</p>
+<p>$U_{t} = R_{t} + γR_{t+1} + γ^{2}R_{t+2}…$</p>
+<p>回报取决于动作$A_{t}, A_{t+1}, A_{t+2}$…和状态$S_{t}, S_{t+1}, S_{t+2}…$</p>
+<ul>
+<li><p>动作的随机性来自于策略函数，$P[A=a|S=s]=π(a|s)。</p>
+</li>
+<li><p>状态的随机性来自于状态转移函数，$P[S^{‘}=s^{‘}|S=s,A=a]=p(s^{‘}|s,a)$</p>
+</li>
+</ul>
+<h5 id="动作价值函数和策略π"><a href="#动作价值函数和策略π" class="headerlink" title="动作价值函数和策略π"></a>动作价值函数和策略π</h5><p>$Q_{π}(S_{t}, a_{t})=E[U_{t}|S_{t}, A_{t}=a_{t}]$</p>
+<p>Q值和π和当前的s,a有关，未来的随机性被期望消除了。Qπ只依赖于当前状态和动作，可以反映在当前状态做动作的好坏程度。</p>
+<h5 id="最优动作价值函数"><a href="#最优动作价值函数" class="headerlink" title="最优动作价值函数"></a>最优动作价值函数</h5><p>$Q^{*}(S_{t},a_{t})=max_{π}Q_{π}(s_{t},a_{t})$</p>
+<p>Q*函数基于当前状态st做at的好坏程度，消除了策略π的影响，无论选择何种策略，当前Q都是最好的。</p>
+<h2 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h2><p>我们的目标是获取最大收益。</p>
+<p>问题：假设已知Q*(s,a)函数，如何选择最好的动作？</p>
+<p>答案：显然最好的动作是使Q值最大的$a^{<em>}=argmax_{a}Q^{</em>}(s,a)$，但是我们并不知道$Q^{*}(s,a)$。</p>
+<p>挑战：如何学习出一个Q*函数，可以像先知一样，知道走哪一步最好？</p>
+<p>解决方案：DQN（Deep Q Network）算法，是价值学习方法。使用神经网络Q(s,a;w)去近似Q*(s,a)函数，神经网络的输入是s，参数是w，输出是很多数值，这些数值是对所有动作的打分，通过奖励来学习神经网络。</p>
+<p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/1.png" alt="1"></p>
+<p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/2.png" alt="2"><br>DQN主要学习的是Q函数，神经网络根据输入s，通过Q函数来选择a，然后获得奖励以及新状态…。</p>
+<h2 id="TD"><a href="#TD" class="headerlink" title="TD"></a>TD</h2><h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>如图所示，驾车从NYC(纽约)到Atlanta(亚特兰大)，模型Q(w)预测时间为1000分钟，如何更新模型呢？</p>
+<p>预测值$q=Q(w), q=1000$，真实值y=860，损失$L=\frac{1}{2}(q-y)^{2}$，<br>梯度为$\frac{∂L}{∂w}=\frac{∂q}{∂w}·\frac{∂L}{∂q}=(q-y)·\frac{∂Q(w)}{∂w}$，<br>$w_{t+1}=w_{t}-α·\frac{∂L}{∂w}|w=w_{t}$<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/3.png" alt="3"></p>
+<p>这种算法的确定是必须走完全程，才能更新一次参数。TD算法是如何做的呢？</p>
+<ul>
+<li>模型最初的预测$Q(w)=1000$分钟。</li>
+<li>当走了300分钟到达DC时，模型预测600分钟到达Atlanta。更新预测300+600=900分钟。</li>
+<li>TD target900比最初的预测1000分钟更加可靠，因为其中有真实的部分。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/4.png" alt="4"><br>注意到，第一次预测减去第二次预测的值就是TD error。这种方法同样适用于DQN的训练。第一次预测的动作打分是qt，然后前进一步，做出第二次打分yt，yt-qt就是TD error，不断优化这个TD error，模型对动作打分的预测会越来越准。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/5.png" alt="5"></li>
+</ul>
+<p>TD（Temporal Difference Learning）是常用于训练DQN的方法。</p>
+<ol>
+<li>观测当前状态$S_{t}=s_{t}$和动作$A_{t}=a_{t}$</li>
+<li>用DQN做一次计算，输入是st，输出是at的打分qt,$q_{t}=Q(s_{t},a_{t};w_{t})$</li>
+<li>用反向传播对DQN求导，得到梯度dt，$dt=\frac{∂Q(s_{t},a_{t};w)}{∂w}|w=w_{t}$</li>
+<li>环境给出新的状态$s_{t+1}$和奖励$r_{t}$</li>
+<li>计算TD target: $y_{t}=r_{t}+γ·max_{a}Q(s_{t+1},a;w_{t})$</li>
+<li>梯度下降，$w_{t+1}=w_{t}-α·(q_{t}-y_{t})·d_{t}$</li>
+</ol>
 
                 
             </div>
@@ -452,7 +489,7 @@ if (windowWidth > 768) {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://puhaoran.github.io/2021/03/20/hello-world/">https://puhaoran.github.io/2021/03/20/hello-world/</a>
+                    <a href="https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/">https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -489,7 +526,11 @@ if (windowWidth > 768) {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98/">
+                                    <span class="chip bg-color">深度强化学习实战</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -659,9 +700,60 @@ if (windowWidth > 768) {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="深度强化学习实战之价值学习">
+                        
+                        <span class="card-title">深度强化学习实战之价值学习</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    强化学习
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98/">
+                        <span class="chip bg-color">深度强化学习实战</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/03/28/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ji-ben-gai-nian/">
                     <div class="card-image">
@@ -679,9 +771,9 @@ if (windowWidth > 768) {
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -702,44 +794,6 @@ if (windowWidth > 768) {
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/03/20/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-20
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            指尖旋律
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>
@@ -867,6 +921,13 @@ if (windowWidth > 768) {
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 
