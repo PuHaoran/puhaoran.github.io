@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="深度强化学习实战之价值学习, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="keywords" content="深度强化学习实战之Actor-Critic, 算法策略，深度思考，深度学习，个人成长">
     <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>深度强化学习实战之价值学习 | 深度实验室</title>
+    <title>深度强化学习实战之Actor-Critic | 深度实验室</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -259,12 +259,12 @@ if (windowWidth > 768) {
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">深度强化学习实战之价值学习</h1>
+                    <h1 class="description center-align post-title">深度强化学习实战之Actor-Critic</h1>
                 </div>
             </div>
         </div>
@@ -405,7 +405,7 @@ if (windowWidth > 768) {
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-29
+                    2021-03-30
                 </div>
                 
 
@@ -426,42 +426,63 @@ if (windowWidth > 768) {
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><h5 id="Return"><a href="#Return" class="headerlink" title="Return"></a>Return</h5><p>回报，未来的累计奖励。</p>
-<p>$U_{t} = R_{t} + γR_{t+1} + γ^{2}R_{t+2}…$</p>
-<p>回报取决于动作$A_{t}, A_{t+1}, A_{t+2}$…和状态$S_{t}, S_{t+1}, S_{t+2}…$</p>
+                <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>Actor-Critic合并了策略学习和价值学习两种强化学习算法。Actor是策略网络，用来控制agent运动，可以看做运动员；Critic是价值网络，用来给动作打分，可以看做裁判员。</p>
+<p><img src="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-actor-critic/1.png" alt="1"></p>
+<h5 id="价值网络和策略网络"><a href="#价值网络和策略网络" class="headerlink" title="价值网络和策略网络"></a>价值网络和策略网络</h5><p>状态价值函数</p>
+<p>$V_{π}=\sum_{a}π(a|s)·Q_{π}(s,a)≈\sum_{a}π(a|s;θ)·Q_{π}(s,a;w)$</p>
+<p>公式中π和$Q_{π}$都是未知的。</p>
+<p>策略网络(actor)</p>
 <ul>
-<li><p>动作的随机性来自于策略函数，$P[A=a|S=s]=π(a|s)$。</p>
+<li>使用神经网络$π(a|s;θ)$去近似$π(a|s)$</li>
+<li>神经网络训练参数θ</li>
+</ul>
+<p>价值网络(critic)</p>
+<ul>
+<li>使用神经网络$q(s,a;w)$去近似$Q_{π}(s,a)$</li>
+<li>神经网络训练参数w</li>
+</ul>
+<p>actor是个运动员可以做动作，但他不知道什么是好的动作，这时候就需要裁判critic来评判。学习这两个网络的目的是让运动员的平均分越来越高，同时让裁判的打分越来越准。</p>
+<p><img src="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-actor-critic/2.png" alt="2"></p>
+<p><img src="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-actor-critic/3.png" alt="3"></p>
+<h5 id="训练神经网络"><a href="#训练神经网络" class="headerlink" title="训练神经网络"></a>训练神经网络</h5><p>使用神经网络近似这两个函数</p>
+<p>$V(s;θ,w)=\sum_{a}π(a|s;θ)·q(s,a;w)$</p>
+<p>更新参数θ和w</p>
+<p>更新策略网络$π(a|s;θ)$为了增加状态值$V(s;θ,w)$。</p>
+<p>更新价值网络q(s,a;w)为了打分越来越精准。</p>
+<ol>
+<li>观测状态$s_{t}$。</li>
+<li>随机抽样根据$π(·|s_{t};θ_{t})$得到动作$a_{t}$。</li>
+<li>完成$a_{t}$并观测新的状态$s_{t+1}$和奖励$r_{t}$。</li>
+<li>更新w(价值网络参数)使用时间差异(TD)。</li>
+<li>更新θ(策略网络参数)使用策略梯度。</li>
+</ol>
+<h5 id="使用TD算法更新价值网络q"><a href="#使用TD算法更新价值网络q" class="headerlink" title="使用TD算法更新价值网络q"></a>使用TD算法更新价值网络q</h5><ul>
+<li>计算$q(s_{t},a_{t};w_{t})$和$q(s_{t+1},a_{t+1};w_{t})$</li>
+<li>TD target: $y_{t}=r_{t}+γ·q(s_{t+1},a_{t+1};w_{t})$</li>
+<li>损失: $L(w)=\frac{1}{2}[q(s_{t},a_{t};w)-y_{t}]^{2}$</li>
+<li>梯度下降: $w_{t+1}=w_{t}-α·\frac{∂L(w)}{∂w}|w=w_{t}$</li>
+</ul>
+<p>使得裁判打分更准。</p>
+<h5 id="使用策略梯度更新策略网络π"><a href="#使用策略梯度更新策略网络π" class="headerlink" title="使用策略梯度更新策略网络π"></a>使用策略梯度更新策略网络π</h5><ul>
+<li><p>神经网络近似状态价值函数$V(s;θ,w)=\sum_{a}π(a|s;θ)·q(s,a;w)$</p>
 </li>
-<li><p>状态的随机性来自于状态转移函数，$P[S^{‘}=s^{‘}|S=s,A=a]=p(s^{‘}|s,a)$</p>
+<li><p>策略梯度，更新$V(s_{t};θ,w)$的θ</p>
 </li>
 </ul>
-<h5 id="动作价值函数和策略π"><a href="#动作价值函数和策略π" class="headerlink" title="动作价值函数和策略π"></a>动作价值函数和策略π</h5><p>$Q_{π}(S_{t}, a_{t})=E[U_{t}|S_{t}, A_{t}=a_{t}]$</p>
-<p>Q值和π和当前的s,a有关，未来的随机性被期望消除了。Qπ只依赖于当前状态和动作，可以反映在当前状态做动作的好坏程度。</p>
-<h5 id="最优动作价值函数"><a href="#最优动作价值函数" class="headerlink" title="最优动作价值函数"></a>最优动作价值函数</h5><p>$Q^{*}(S_{t},a_{t})=max_{π}Q_{π}(s_{t},a_{t})$</p>
-<p>Q*函数基于当前状态st做at的好坏程度，消除了策略π的影响，无论选择何种策略，当前Q都是最好的。</p>
-<h2 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h2><p>我们的目标是获取最大收益。</p>
-<p>问题：假设已知$Q*(s,a)$函数，如何选择最好的动作？</p>
-<p>答案：显然最好的动作是使Q值最大的$a^{<em>}=argmax_{a}Q^{</em>}(s,a)$，但是我们并不知道$Q^{*}(s,a)$。</p>
-<p>挑战：如何学习出一个Q*函数，可以像先知一样，知道走哪一步最好？</p>
-<p>解决方案：DQN（Deep Q Network）算法，是价值学习方法。使用神经网络Q(s,a;w)去近似Q*(s,a)函数，神经网络的输入是s，参数是w，输出是很多数值，这些数值是对所有动作的打分，通过奖励来学习神经网络。</p>
-<p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/1.png" alt="1"></p>
-<p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/2.png" alt="2"><br>DQN主要学习的是Q函数，神经网络根据输入s，通过Q函数来选择a，然后获得奖励以及新状态…。</p>
-<h2 id="TD"><a href="#TD" class="headerlink" title="TD"></a>TD</h2><h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>如图所示，驾车从NYC(纽约)到Atlanta(亚特兰大)，模型Q(w)预测时间为1000分钟，如何更新模型呢？</p>
-<p>预测值$q=Q(w), q=1000$，真实值y=860，损失$L=\frac{1}{2}(q-y)^{2}$，<br>梯度为$\frac{∂L}{∂w}=\frac{∂q}{∂w}·\frac{∂L}{∂q}=(q-y)·\frac{∂Q(w)}{∂w}$，<br>$w_{t+1}=w_{t}-α·\frac{∂L}{∂w}|w=w_{t}$<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/3.png" alt="3"></p>
-<p>这种算法的确定是必须走完全程，才能更新一次参数。TD算法是如何做的呢？</p>
-<ul>
-<li>模型最初的预测$Q(w)=1000$分钟。</li>
-<li>当走了300分钟到达DC时，模型预测600分钟到达Atlanta。更新预测300+600=900分钟。</li>
-<li>TD target900比最初的预测1000分钟更加可靠，因为其中有真实的部分。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/4.png" alt="4"><br>注意到，第一次预测减去第二次预测的值就是TD error。这种方法同样适用于DQN的训练。第一次预测的动作打分是qt，然后前进一步，做出第二次打分yt，yt-qt就是TD error，不断优化这个TD error，模型对动作打分的预测会越来越准。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/5.png" alt="5"></li>
-</ul>
-<p>TD（Temporal Difference Learning）是常用于训练DQN的方法。</p>
-<h5 id="价值学习总结"><a href="#价值学习总结" class="headerlink" title="价值学习总结"></a>价值学习总结</h5><ol>
-<li>观测当前状态$S_{t}=s_{t}$和动作$A_{t}=a_{t}$</li>
-<li>用DQN做一次计算，输入是st，输出是at的打分qt,$q_{t}=Q(s_{t},a_{t};w_{t})$</li>
-<li>用反向传播对DQN求导，得到梯度dt，$dt=\frac{∂Q(s_{t},a_{t};w)}{∂w}|w=w_{t}$</li>
-<li>环境给出新的状态$s_{t+1}$和奖励$r_{t}$</li>
-<li>计算TD target: $y_{t}=r_{t}+γ·max_{a}Q(s_{t+1},a;w_{t})$</li>
-<li>梯度下降，$w_{t+1}=w_{t}-α·(q_{t}-y_{t})·d_{t}$</li>
+<p>$g(a,θ)=\frac{∂logπ(a|s,θ)}{∂θ}·q(s_{t},a;w)$</p>
+<p>$\frac{∂V(s;θ,w_{t})}{∂θ}=E_{A}[g(A, θ)]$</p>
+<p>根据π函数随机采样a，$θ_{t+1}=θ_{t}+β·g(a,θ_{t})$。</p>
+<p>使得运动员得分更高。</p>
+<h5 id="Actor-Critic总结"><a href="#Actor-Critic总结" class="headerlink" title="Actor-Critic总结"></a>Actor-Critic总结</h5><ol>
+<li>观测状态点$s_{t}$和随机抽样$a_{t}$~$π(·|s_{t};θ_{t})$</li>
+<li>完成$a_{t}$，环境给一个新的状态点$s_{t+1}$和回报$r_{t}$</li>
+<li>随机抽样$a_{t+1}^{-}$~$π(·|s_{t};θ_{t})$，注意并未执行$a_{t+1}^{-}$</li>
+<li>评估价值网络$q_{t}=q(s_{t},a_{t};w_{t})$和$q_{t+1}=q(s_{t+1},a_{t+1}^{-};w_{t})$</li>
+<li>计算TD error: $σ_{t}=q_{t}-(r_{t}+γ·q_{t+1})$</li>
+<li>价值网络求导: $d_{w,t}=\frac{∂q(s_{t},a_{t};w)}{∂w}|w=w_{t}$</li>
+<li>更新价值网络: $w_{t+1}=w_{t}-α·σ_{t}·d_{w,t}$</li>
+<li>策略网络求导: $d_{θ,t}=\frac{∂logπ(a_{t}|s_{t};θ)}{∂θ}|θ=θ_{t}$</li>
+<li>更新策略网络: $θ_{t+1}=θ_{t}+β·q_{t}·d_{θ,t}$</li>
 </ol>
 
                 
@@ -489,7 +510,7 @@ if (windowWidth > 768) {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/">https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/</a>
+                    <a href="https://puhaoran.github.io/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-actor-critic/">https://puhaoran.github.io/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-actor-critic/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -700,17 +721,18 @@ if (windowWidth > 768) {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/">
+                <a href="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-actor-critic/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="深度强化学习实战之策略学习">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="深度强化学习实战之Actor-Critic">
                         
-                        <span class="card-title">深度强化学习实战之策略学习</span>
+                        <span class="card-title">深度强化学习实战之Actor-Critic</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -720,9 +742,9 @@ if (windowWidth > 768) {
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-29
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -735,6 +757,7 @@ if (windowWidth > 768) {
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -753,13 +776,13 @@ if (windowWidth > 768) {
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/28/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ji-ben-gai-nian/">
+                <a href="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="深度强化学习实战之基本概念">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="深度强化学习实战之策略学习">
                         
-                        <span class="card-title">深度强化学习实战之基本概念</span>
+                        <span class="card-title">深度强化学习实战之策略学习</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -770,7 +793,7 @@ if (windowWidth > 768) {
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-29
                             </span>
                         <span class="publish-author">
                             

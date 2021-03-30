@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="深度强化学习实战之价值学习, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="keywords" content="深度强化学习实战之策略学习, 算法策略，深度思考，深度学习，个人成长">
     <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>深度强化学习实战之价值学习 | 深度实验室</title>
+    <title>深度强化学习实战之策略学习 | 深度实验室</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -259,12 +259,12 @@ if (windowWidth > 768) {
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">深度强化学习实战之价值学习</h1>
+                    <h1 class="description center-align post-title">深度强化学习实战之策略学习</h1>
                 </div>
             </div>
         </div>
@@ -426,42 +426,54 @@ if (windowWidth > 768) {
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><h5 id="Return"><a href="#Return" class="headerlink" title="Return"></a>Return</h5><p>回报，未来的累计奖励。</p>
+                <h2 id="策略学习"><a href="#策略学习" class="headerlink" title="策略学习"></a>策略学习</h2><h5 id="policy函数"><a href="#policy函数" class="headerlink" title="policy函数"></a>policy函数</h5><p>策略，根据观测的状态来做出决策来控制agent的运动。</p>
+<p>policy函数，$π(s, a)$，范围[0,1]，其中</p>
+<p>$π(s, a) = P(A=a|S=s)$，根据policy函数，可以求出给定状态s，采取动作a的概率。</p>
+<p>理想中，我们可以采用$s × a$的表代表policy的概率，但对于超级玛丽这种游戏，有无数种状态，需要用一个policy网络来近似。</p>
+<h5 id="policy-network"><a href="#policy-network" class="headerlink" title="policy network"></a>policy network</h5><p>策略网络（policy network）$π(a|s;θ)$近似$π(a|s)$。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/1.png" alt="1"></p>
+<p>$\sum_{a∈A}(a|s;θ)=1$，其中A={‘left’, ‘right’, ‘up’}，是一个动作集合。</p>
+<h5 id="回报"><a href="#回报" class="headerlink" title="回报"></a>回报</h5><p>return，当前和未来的累计奖励</p>
 <p>$U_{t} = R_{t} + γR_{t+1} + γ^{2}R_{t+2}…$</p>
-<p>回报取决于动作$A_{t}, A_{t+1}, A_{t+2}$…和状态$S_{t}, S_{t+1}, S_{t+2}…$</p>
-<ul>
-<li><p>动作的随机性来自于策略函数，$P[A=a|S=s]=π(a|s)$。</p>
-</li>
-<li><p>状态的随机性来自于状态转移函数，$P[S^{‘}=s^{‘}|S=s,A=a]=p(s^{‘}|s,a)$</p>
-</li>
+<h5 id="动作值函数"><a href="#动作值函数" class="headerlink" title="动作值函数"></a>动作值函数</h5><p>$Q_π(S_{t}, a_{t})=E[U_{t}|S_{t}=s_{t},A_{t}=a_{t}]$</p>
+<h5 id="状态值函数"><a href="#状态值函数" class="headerlink" title="状态值函数"></a>状态值函数</h5><p>$V_{π}(s_{t})=E_{A}[Q_{π}(s_{t}, A)]=\sum_{a}π(a|s_{t})·Q_{π}(s_{t}, a)$</p>
+<p><strong>近似状态值函数</strong></p>
+<p>$V_{π}(s_{t};θ)=E_{A}[Q_{π}(s_{t}, A)]=\sum_{a}π(a|s_{t};θ)·Q_{π}(s_{t}, a)$</p>
+<p>目标是最大化状态价值的期望，$J(θ)=E_{S}[V(S;θ)]$</p>
+<p>如何更新θ呢？</p>
+<p>$θ &lt;- θ + β·\frac{∂V(s;θ)}{∂θ}$</p>
+<h5 id="策略梯度"><a href="#策略梯度" class="headerlink" title="策略梯度"></a>策略梯度</h5><ul>
+<li>第一种形式</li>
 </ul>
-<h5 id="动作价值函数和策略π"><a href="#动作价值函数和策略π" class="headerlink" title="动作价值函数和策略π"></a>动作价值函数和策略π</h5><p>$Q_{π}(S_{t}, a_{t})=E[U_{t}|S_{t}, A_{t}=a_{t}]$</p>
-<p>Q值和π和当前的s,a有关，未来的随机性被期望消除了。Qπ只依赖于当前状态和动作，可以反映在当前状态做动作的好坏程度。</p>
-<h5 id="最优动作价值函数"><a href="#最优动作价值函数" class="headerlink" title="最优动作价值函数"></a>最优动作价值函数</h5><p>$Q^{*}(S_{t},a_{t})=max_{π}Q_{π}(s_{t},a_{t})$</p>
-<p>Q*函数基于当前状态st做at的好坏程度，消除了策略π的影响，无论选择何种策略，当前Q都是最好的。</p>
-<h2 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h2><p>我们的目标是获取最大收益。</p>
-<p>问题：假设已知$Q*(s,a)$函数，如何选择最好的动作？</p>
-<p>答案：显然最好的动作是使Q值最大的$a^{<em>}=argmax_{a}Q^{</em>}(s,a)$，但是我们并不知道$Q^{*}(s,a)$。</p>
-<p>挑战：如何学习出一个Q*函数，可以像先知一样，知道走哪一步最好？</p>
-<p>解决方案：DQN（Deep Q Network）算法，是价值学习方法。使用神经网络Q(s,a;w)去近似Q*(s,a)函数，神经网络的输入是s，参数是w，输出是很多数值，这些数值是对所有动作的打分，通过奖励来学习神经网络。</p>
-<p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/1.png" alt="1"></p>
-<p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/2.png" alt="2"><br>DQN主要学习的是Q函数，神经网络根据输入s，通过Q函数来选择a，然后获得奖励以及新状态…。</p>
-<h2 id="TD"><a href="#TD" class="headerlink" title="TD"></a>TD</h2><h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>如图所示，驾车从NYC(纽约)到Atlanta(亚特兰大)，模型Q(w)预测时间为1000分钟，如何更新模型呢？</p>
-<p>预测值$q=Q(w), q=1000$，真实值y=860，损失$L=\frac{1}{2}(q-y)^{2}$，<br>梯度为$\frac{∂L}{∂w}=\frac{∂q}{∂w}·\frac{∂L}{∂q}=(q-y)·\frac{∂Q(w)}{∂w}$，<br>$w_{t+1}=w_{t}-α·\frac{∂L}{∂w}|w=w_{t}$<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/3.png" alt="3"></p>
-<p>这种算法的确定是必须走完全程，才能更新一次参数。TD算法是如何做的呢？</p>
+<p>$\frac{∂V(s;θ)}{∂θ}=\frac{∂\sum_{a}π(a|s;θ)·Q_{π}(s,a)}{∂θ}$</p>
+<p>= $\sum_{a}\frac{∂π(a|s;θ)·Q_{π}(s,a)}{∂θ}$</p>
+<p>= $\sum_{a}\frac{∂π(a|s;θ)}{∂θ}·Q_{π}(s,a)$ // 假设θ是独立于$Q_{π}$。</p>
 <ul>
-<li>模型最初的预测$Q(w)=1000$分钟。</li>
-<li>当走了300分钟到达DC时，模型预测600分钟到达Atlanta。更新预测300+600=900分钟。</li>
-<li>TD target900比最初的预测1000分钟更加可靠，因为其中有真实的部分。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/4.png" alt="4"><br>注意到，第一次预测减去第二次预测的值就是TD error。这种方法同样适用于DQN的训练。第一次预测的动作打分是qt，然后前进一步，做出第二次打分yt，yt-qt就是TD error，不断优化这个TD error，模型对动作打分的预测会越来越准。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/5.png" alt="5"></li>
+<li>第二种形式</li>
 </ul>
-<p>TD（Temporal Difference Learning）是常用于训练DQN的方法。</p>
-<h5 id="价值学习总结"><a href="#价值学习总结" class="headerlink" title="价值学习总结"></a>价值学习总结</h5><ol>
-<li>观测当前状态$S_{t}=s_{t}$和动作$A_{t}=a_{t}$</li>
-<li>用DQN做一次计算，输入是st，输出是at的打分qt,$q_{t}=Q(s_{t},a_{t};w_{t})$</li>
-<li>用反向传播对DQN求导，得到梯度dt，$dt=\frac{∂Q(s_{t},a_{t};w)}{∂w}|w=w_{t}$</li>
-<li>环境给出新的状态$s_{t+1}$和奖励$r_{t}$</li>
-<li>计算TD target: $y_{t}=r_{t}+γ·max_{a}Q(s_{t+1},a;w_{t})$</li>
-<li>梯度下降，$w_{t+1}=w_{t}-α·(q_{t}-y_{t})·d_{t}$</li>
+<p>$\frac{∂V(s;θ)}{∂θ}$ = $\sum_{a}\frac{∂π(a|s;θ)}{∂θ}·Q_{π}(s,a)$</p>
+<p>= $\sum_{a}π(a|s;θ)·\frac{∂logπ(a|s;θ)}{∂θ}$</p>
+<p>这两种形式是等价的，离散的使用第一种，连续的使用第二种。</p>
+<p>对于离散的动作，我们取第一种。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/2.png" alt="2"></p>
+<p>对于连续的动作，可以有[0,1]所有的实数，动作有无数种，无法做动作的加和，故使用第二个公式。<br>先通过policyπ函数随机抽样一个a，然后根据蒙特卡洛近似出g，使用g近似策略梯度。<br><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/3.png" alt="3"></p>
+<h5 id="策略梯度算法总结"><a href="#策略梯度算法总结" class="headerlink" title="策略梯度算法总结"></a>策略梯度算法总结</h5><ol>
+<li>观测到$s_t$</li>
+<li>策略网络随机抽样动作$a_t$</li>
+<li>计算t时刻的动作价值$q_{t}≈Q_{π}(s_{t}, a_{t})$</li>
+<li>对策略网络求导$d_{θ,t}=\frac{∂logπ(a_{t}|s_{t};θ)}{∂θ}|θ=θ_{t}$</li>
+<li>近似策略梯度$g(a_{t},θ_{t})=q_{t}·d_{θ,t}$</li>
+<li>更新策略网络$θ_{t+1}=θ_{t}+β·g(a_{t},θ_{t})$</li>
+</ol>
+<h5 id="如何计算-Q-π-s-t-a-t"><a href="#如何计算-Q-π-s-t-a-t" class="headerlink" title="如何计算$Q_{π}(s_{t},a_{t})$"></a>如何计算$Q_{π}(s_{t},a_{t})$</h5><p>方式一：增强(reinforce)</p>
+<p>用策略网络π控制小球运动，从开始玩到游戏结束。s1,a1,r1,s2,a2,r2…sT,aT,rT，然后计算所有奖励r的加权求和。</p>
+<p>计算所有r的$u_{t}=\sum_{k=t}^{T}r^{k-t}r_{k}$</p>
+<p>因为$Qπ(s_{t},a_{t})=E[U_{t}]$，我们使用$u_{t}$近似$Qπ(s_{t},a_{t})$。</p>
+<p>方式二：使用神经网络近似$Q_{π}$</p>
+<p>这样就有了两个网络，一个用来近似π，一个用来近似$Q_{π}$</p>
+<h2 id="策略学习总结"><a href="#策略学习总结" class="headerlink" title="策略学习总结"></a>策略学习总结</h2><ol>
+<li>我们希望得到策略函数π，然后用π自动控制agent运动。每当agent观察st，agent就用π自动算出at。</li>
+<li>直接求策略函数比较困难，故用神经网络近似策略函数，这个网络称为策略网络(policy network)$π(a|s;θ)$。</li>
+<li>根据策略梯度学习策略网络。</li>
+<li>策略梯度是状态价值函数V关于θ的导数$E_{S}[V(S;θ)]$。（注：目标函数是状态价值V关于状态的期望）</li>
 </ol>
 
                 
@@ -489,7 +501,7 @@ if (windowWidth > 768) {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/">https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/</a>
+                    <a href="https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/">https://puhaoran.github.io/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -704,13 +716,13 @@ if (windowWidth > 768) {
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ce-lue-xue-xi/">
+                <a href="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-actor-critic/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="深度强化学习实战之策略学习">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="深度强化学习实战之Actor-Critic">
                         
-                        <span class="card-title">深度强化学习实战之策略学习</span>
+                        <span class="card-title">深度强化学习实战之Actor-Critic</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -721,7 +733,7 @@ if (windowWidth > 768) {
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-29
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-30
                         </span>
                         <span class="publish-author">
                             
@@ -753,13 +765,13 @@ if (windowWidth > 768) {
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/28/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ji-ben-gai-nian/">
+                <a href="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="深度强化学习实战之基本概念">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="深度强化学习实战之价值学习">
                         
-                        <span class="card-title">深度强化学习实战之基本概念</span>
+                        <span class="card-title">深度强化学习实战之价值学习</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -770,7 +782,7 @@ if (windowWidth > 768) {
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-29
                             </span>
                         <span class="publish-author">
                             
