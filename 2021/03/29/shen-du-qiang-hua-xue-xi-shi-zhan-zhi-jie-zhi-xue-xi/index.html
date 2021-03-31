@@ -441,9 +441,9 @@ if (windowWidth > 768) {
 <p>Q*函数基于当前状态st做at的好坏程度，消除了策略π的影响，无论选择何种策略，当前Q都是最好的。</p>
 <h2 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h2><p>我们的目标是获取最大收益。</p>
 <p>问题：假设已知$Q*(s,a)$函数，如何选择最好的动作？</p>
-<p>答案：显然最好的动作是使Q值最大的$a^{<em>}=argmax_{a}Q^{</em>}(s,a)$，但是我们并不知道$Q^{*}(s,a)$。</p>
+<p>答案：显然最好的动作是使Q值最大的$a*=argmax_{a}Q*(s,a)$，但是我们并不知道$Q*(s,a)$。</p>
 <p>挑战：如何学习出一个Q*函数，可以像先知一样，知道走哪一步最好？</p>
-<p>解决方案：DQN（Deep Q Network）算法，是价值学习方法。使用神经网络Q(s,a;w)去近似Q*(s,a)函数，神经网络的输入是s，参数是w，输出是很多数值，这些数值是对所有动作的打分，通过奖励来学习神经网络。</p>
+<p>解决方案：DQN（Deep Q Network）算法，是价值学习方法。使用神经网络$Q(s,a;w)$去近似$Q*(s,a)$函数，神经网络的输入是s，参数是w，输出是很多数值，这些数值是对所有动作的打分，通过奖励来学习神经网络。</p>
 <p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/1.png" alt="1"></p>
 <p><img src="/2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/2.png" alt="2"><br>DQN主要学习的是Q函数，神经网络根据输入s，通过Q函数来选择a，然后获得奖励以及新状态…。</p>
 <h2 id="TD"><a href="#TD" class="headerlink" title="TD"></a>TD</h2><h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>如图所示，驾车从NYC(纽约)到Atlanta(亚特兰大)，模型Q(w)预测时间为1000分钟，如何更新模型呢？</p>
