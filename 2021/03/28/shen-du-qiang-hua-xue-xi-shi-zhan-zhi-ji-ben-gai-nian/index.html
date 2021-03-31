@@ -426,7 +426,47 @@ if (windowWidth > 768) {
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前提知识"><a href="#前提知识" class="headerlink" title="前提知识"></a>前提知识</h2><h5 id="随机变量"><a href="#随机变量" class="headerlink" title="随机变量"></a>随机变量</h5><p>随机变量只取决于随机事件的结果。<br><img src="/2021/03/28/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ji-ben-gai-nian/1.png" alt="1"></p>
+                <h2 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h2><p>强化学习是一种试错方法，目标是让智能体在特定环境能够采取回报最大化的行为。</p>
+<p>按照学习方式不同，强化学习可以分为：</p>
+<ul>
+<li><p>基于概率（Policy-Based RL）</p>
+<ul>
+<li>policy gradients</li>
+</ul>
+</li>
+<li><p>基于价值（Value-Based RL）</p>
+<ul>
+<li>Q-Learning</li>
+<li>sarsa</li>
+</ul>
+</li>
+</ul>
+<p>按照更新方式不同，强化学习可以分为</p>
+<ul>
+<li><p>回合更新</p>
+<ul>
+<li>基础版policy gradients</li>
+<li>monte-carlo learning</li>
+</ul>
+</li>
+<li><p>单步更新</p>
+<ul>
+<li>Q-Learning</li>
+<li>Sarsa</li>
+<li>升级版Policy Gradients</li>
+</ul>
+</li>
+</ul>
+<p>流行的强化学习方法包括：</p>
+<ul>
+<li>自适应动态规划 ADP</li>
+<li>时间差分学习 TD</li>
+<li>状态-动作-回报-状态-动作算法 SARSA</li>
+<li>Q-Learning</li>
+<li>深度强化学习 DQN</li>
+</ul>
+<p>其主要应用于下棋类、机器人控制和工作调度等。</p>
+<h5 id="随机变量"><a href="#随机变量" class="headerlink" title="随机变量"></a>随机变量</h5><p>随机变量只取决于随机事件的结果。<br><img src="/2021/03/28/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-ji-ben-gai-nian/1.png" alt="1"></p>
 <ul>
 <li>X: 随机变量</li>
 <li>x: 观测值</li>
@@ -447,16 +487,7 @@ if (windowWidth > 768) {
 <p>$E[f(X)] = \int_{χ}p(x)·f(x)dx$</p>
 <p>2）对于离散分布，f(X)的期望为：</p>
 <p>$E[f(X)] = \sum_{x∈χ}p(x)·f(x)$</p>
-<h2 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h2><h5 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h5><p>强化学习是一种试错方法，目标是让智能体在特定环境能够采取回报最大化的行为。流行的强化学习方法包括：</p>
-<ul>
-<li>自适应动态规划 ADP</li>
-<li>时间差分学习 TD</li>
-<li>状态-动作-回报-状态-动作算法 SARSA</li>
-<li>Q学习</li>
-<li>深度强化学习 DQN</li>
-</ul>
-<p>其主要应用于下棋类、机器人控制和工作调度等。</p>
-<p>强化学习的专业术语包括：state、action、agent、policy。</p>
+<h2 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h2><h5 id="强化学习-1"><a href="#强化学习-1" class="headerlink" title="强化学习"></a>强化学习</h5><p>强化学习的专业术语包括：state、action、agent、policy。</p>
 <h5 id="agent"><a href="#agent" class="headerlink" title="agent"></a>agent</h5><p>agent做动作的智能体，例如超级玛丽中玛丽就是agent，自动驾驶中汽车是agent。</p>
 <h5 id="state"><a href="#state" class="headerlink" title="state"></a>state</h5><p>state当前agent所处的状态，例如整个界面就是state。</p>
 <h5 id="action"><a href="#action" class="headerlink" title="action"></a>action</h5><p>agent的动作，例如玛丽的上下左右。</p>
