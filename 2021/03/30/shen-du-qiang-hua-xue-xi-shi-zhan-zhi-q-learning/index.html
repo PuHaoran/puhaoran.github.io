@@ -468,6 +468,100 @@ if (windowWidth > 768) {
 </ul>
 </li>
 </ul>
+<h2 id="Q-Learning代码实现"><a href="#Q-Learning代码实现" class="headerlink" title="Q-Learning代码实现"></a>Q-Learning代码实现</h2><h5 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h5><p><img src="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-q-learning/3.png" alt="3"></p>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
+
+np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>seed<span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 产生一组固定的随机序列</span>
+
+N_STATES <span class="token operator">=</span> <span class="token number">6</span> <span class="token comment" spellcheck="true"># 状态点数量</span>
+ACTIONS <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'left'</span><span class="token punctuation">,</span> <span class="token string">'right'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># 动作</span>
+EPSILON <span class="token operator">=</span> <span class="token number">0.9</span> <span class="token comment" spellcheck="true"># greedy</span>
+ALPHA <span class="token operator">=</span> <span class="token number">0.1</span> <span class="token comment" spellcheck="true"># learning rate</span>
+GAMMA <span class="token operator">=</span> <span class="token number">0.9</span> <span class="token comment" spellcheck="true"># 衰减因子</span>
+MAX_EPISODE <span class="token operator">=</span> <span class="token number">10</span> <span class="token comment" spellcheck="true"># 迭代次数</span>
+FRESH_TIME <span class="token operator">=</span> <span class="token number">0.1</span> <span class="token comment" spellcheck="true"># 刷新时间</span>
+
+<span class="token keyword">def</span> <span class="token function">build_qtable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" 建立一个s×a的Q表 """</span>
+    q_table <span class="token operator">=</span> pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>
+        np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>N_STATES<span class="token punctuation">,</span> len<span class="token punctuation">(</span>ACTIONS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        columns<span class="token operator">=</span>ACTIONS
+    <span class="token punctuation">)</span>
+    <span class="token keyword">return</span> q_table
+
+<span class="token keyword">def</span> <span class="token function">choose_action</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> q_table<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" 90%的概率选当前状态下q值大的动作，10%的概率随机选动作 """</span>
+    state_actions <span class="token operator">=</span> q_table<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span>state<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
+    <span class="token keyword">if</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> EPSILON <span class="token operator">or</span> state_actions<span class="token punctuation">.</span>all<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        action_name <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span>ACTIONS<span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        action_name <span class="token operator">=</span> ACTIONS<span class="token punctuation">[</span>state_actions<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> action_name
+
+<span class="token keyword">def</span> <span class="token function">get_env_feedback</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" 选定动作，从环境中得到奖励r和下一次的状态_s """</span>
+    <span class="token keyword">if</span> a <span class="token operator">==</span> <span class="token string">'right'</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># agent到达目的地，获得奖励</span>
+        <span class="token keyword">if</span> s <span class="token operator">==</span> N_STATES <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">:</span>
+            _s <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+            r <span class="token operator">=</span> <span class="token number">1</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            _s <span class="token operator">=</span> s<span class="token operator">+</span><span class="token number">1</span>
+            r <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        r <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">if</span> s <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            _s <span class="token operator">=</span> s
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            _s <span class="token operator">=</span> s<span class="token number">-1</span>
+    <span class="token keyword">return</span> _s<span class="token punctuation">,</span> r
+    
+<span class="token keyword">def</span> <span class="token function">update_env</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> episode<span class="token punctuation">,</span> step_counter<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" 更新环境 """</span>
+    env_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'-'</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token punctuation">(</span>N_STATES<span class="token number">-1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">[</span><span class="token string">'T'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># '------T'</span>
+    <span class="token keyword">if</span> s <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'episode: {}, step_counter: {}'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>episode<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> step_counter<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        env_list<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'o'</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>env_list<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>FRESH_TIME<span class="token punctuation">)</span>
+        
+<span class="token keyword">def</span> <span class="token function">rl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># 1. 初始化一张s×a的q表，初始值均为0。</span>
+    q_table <span class="token operator">=</span> build_qtable<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'init q-table:\n'</span><span class="token punctuation">,</span> q_table<span class="token punctuation">)</span>
+    
+    <span class="token keyword">for</span> episode <span class="token keyword">in</span> range<span class="token punctuation">(</span>MAX_EPISODE<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 2. agent和环境初始化，agent的状态s位于出发点。</span>
+        step_counter <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment" spellcheck="true"># q表迭代次数</span>
+        s <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment" spellcheck="true"># 初始位置</span>
+        is_terminated <span class="token operator">=</span> <span class="token boolean">False</span> <span class="token comment" spellcheck="true"># 回合结束（到达终点）</span>
+        update_env<span class="token punctuation">(</span>s<span class="token punctuation">,</span> episode<span class="token punctuation">,</span> step_counter<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 初始化agent和环境</span>
+        
+        <span class="token comment" spellcheck="true"># 3. 根据实际-预估的误差来更新q值，q值（动作价值）越来越准。</span>
+        <span class="token keyword">while</span> <span class="token operator">not</span> is_terminated<span class="token punctuation">:</span>
+            a <span class="token operator">=</span> choose_action<span class="token punctuation">(</span>s<span class="token punctuation">,</span> q_table<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 选一个行为</span>
+            _s<span class="token punctuation">,</span> r <span class="token operator">=</span> get_env_feedback<span class="token punctuation">(</span>s<span class="token punctuation">,</span> a<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 获取下一个状态和收益</span>
+            <span class="token comment" spellcheck="true">#print('s, a: ', s, a)</span>
+            q_predict <span class="token operator">=</span> q_table<span class="token punctuation">.</span>loc<span class="token punctuation">[</span>s<span class="token punctuation">,</span> a<span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># 获取预估的q值</span>
+            <span class="token keyword">if</span> _s <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+                q_target <span class="token operator">=</span> r <span class="token operator">+</span> GAMMA<span class="token operator">*</span>q_table<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span>_s<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>max<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                q_target <span class="token operator">=</span> r
+                is_terminated <span class="token operator">=</span> <span class="token boolean">True</span>
+            
+            q_table<span class="token punctuation">.</span>loc<span class="token punctuation">[</span>s<span class="token punctuation">,</span> a<span class="token punctuation">]</span> <span class="token operator">+=</span> ALPHA <span class="token operator">*</span> <span class="token punctuation">(</span>q_target <span class="token operator">-</span> q_predict<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 实际-预估的误差，更新q值</span>
+            s <span class="token operator">=</span> _s
+            
+            update_env<span class="token punctuation">(</span>s<span class="token punctuation">,</span> episode<span class="token punctuation">,</span> step_counter<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 更新环境</span>
+            step_counter <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'===== q_table:\n'</span><span class="token punctuation">,</span> q_table<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> q_table
+</code></pre>
+<p><img src="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-q-learning/4.png" alt="4"><br>根据上图可以发现，20轮学习后，小车可以径直走向终点。q-table表中越靠近终点的state，action=’right’的动作价值(q值)越高。</p>
 
                 
             </div>
