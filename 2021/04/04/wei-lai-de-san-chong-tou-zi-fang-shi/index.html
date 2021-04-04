@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="深度学习推荐系统实战之Bandit, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="keywords" content="未来几年，普通人可选择的三种投资方式, 算法策略，深度思考，深度学习，个人成长">
     <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>深度学习推荐系统实战之Bandit | 深度实验室</title>
+    <title>未来几年，普通人可选择的三种投资方式 | 深度实验室</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -259,12 +259,12 @@ if (windowWidth > 768) {
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">深度学习推荐系统实战之Bandit</h1>
+                    <h1 class="description center-align post-title">未来几年，普通人可选择的三种投资方式</h1>
                 </div>
             </div>
         </div>
@@ -380,8 +380,8 @@ if (windowWidth > 768) {
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/">
-                                <span class="chip bg-color">深度学习推荐系统实战</span>
+                            <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/">
+                                <span class="chip bg-color">人生感悟</span>
                             </a>
                         
                     </div>
@@ -392,8 +392,8 @@ if (windowWidth > 768) {
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/" class="post-category">
-                                推荐算法
+                            <a href="/categories/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" class="post-category">
+                                人生感悟
                             </a>
                         
                     </div>
@@ -405,7 +405,7 @@ if (windowWidth > 768) {
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-02
+                    2021-04-04
                 </div>
                 
 
@@ -426,150 +426,19 @@ if (windowWidth > 768) {
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Bandit起源"><a href="#Bandit起源" class="headerlink" title="Bandit起源"></a>Bandit起源</h2><p>Bandit算法来源于历史悠久的赌博学。想象这样一个场景：一个赌徒走进赌场，一眼看去是一排外表一摸一样的老虎机。每个老虎机吐钱的概率不一样，他应该在每次如何选择老虎机才可以做到最大化收益？这就是多臂赌博机问题（Muti-arm Bandits，简称MAB）。一系列应对该问题的策略统称为Bandit算法。</p>
-<p><img src="/2021/04/02/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-bandit/1.png" alt="1"></p>
-<p>现实生活中我们也会遇到一系列类似的场景：</p>
-<ol>
-<li>新用户进入系统，如何得知他对哪个类别更感兴趣？</li>
-<li>有若干广告库物料，如何展示广告，才能获得最大收益？是一直展示收益最高的吗？</li>
-<li>玩家进入新游戏，哪个关卡是他最感兴趣的，如何合理排序？</li>
-</ol>
-<p>解决这类问题最好的方法就是去试，但也不是随便试，而是有策略的试，通过多次实验摸透每个老虎机背后的赢钱规律（概率分布）。</p>
-<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h5 id="累计遗憾"><a href="#累计遗憾" class="headerlink" title="累计遗憾"></a>累计遗憾</h5><p>Bandit算法的思想是，看看每次选择会带来多少遗憾，累计遗憾越少越好。</p>
-<p>$R_{T}=\sum_{i=1}^{T}(w_{opt}-w_{B(i)})=Tw^{*} - \sum_{i=1}^{T}w_{B(i)}$</p>
-<p>$w_{opt}$是每次最优选择得到的收益，$w_{B(i)}$是每次实际选择得到的收益，二者的差就是遗憾的量化。进行T次选择之后，就获得累计遗憾$R_{T}$。</p>
-<h2 id="Bandit算法"><a href="#Bandit算法" class="headerlink" title="Bandit算法"></a>Bandit算法</h2><p>为了更好的学习Bandit算法，我们可以带入下场景。一名拉斯维加斯赌徒走进了赌城，面前有5台老虎机，每台老虎机上都有一个拉杆，如何通过有限的尝试知道哪台老虎机赢钱概率最大？下面介绍多种应对的策略。</p>
-<h5 id="朴素bandit"><a href="#朴素bandit" class="headerlink" title="朴素bandit"></a>朴素bandit</h5><p>随机试若干次，计算每个臂的平均收益，一直选均值最大的那个臂。这个算法是在实际生活中最常采用的。</p>
-<h5 id="Epsilon-Greedy"><a href="#Epsilon-Greedy" class="headerlink" title="Epsilon-Greedy"></a>Epsilon-Greedy</h5><p>Epsilon贪婪算法原理</p>
-<ol>
-<li>在(0, 1)之间选择一个数，名为epsilon。</li>
-<li>每次以epsilon概率随机选择一个臂，以1-epsilon概率选择平均收益最大的臂。</li>
-</ol>
-<h5 id="UCB"><a href="#UCB" class="headerlink" title="UCB"></a>UCB</h5><p>置信区间上界（Upper Confidence Bound，UCB），为每个臂评分，选择评分最高的候选臂。然后观察用户反馈，更新候选臂。</p>
-<p>$x_{j}^{-}(t) + \sqrt{\frac{2lnt}{T_{j,t}}}$</p>
-<p>t是目前的总选择次数，$x_{j}^{-}$是每个臂的平均收益，$T_{j,t}$是j臂的选择次数。由公式可知，一个候选臂被选择次数$T_{j,t}$越小，它的价值越大，排序越靠前。（从公式上可以看出，除了臂本身的平均收益之外，增加了一个选择次数的纬度，相同次数下，选择次数越少，值越大。）</p>
-<h5 id="Thompson-Sample"><a href="#Thompson-Sample" class="headerlink" title="Thompson Sample"></a>Thompson Sample</h5><p>汤普森采样算法原理</p>
-<ol>
-<li>假设每个臂背后的概率分布是Beta分布。</li>
-<li>每次选择，每个臂都会出一个随机数，然后按随机数排序，输出最大随机数的臂对应的物品。</li>
-</ol>
-<p>代入到推荐场景中。Beta分布有两个参数，a参数代表用户点击次数，b参数代表用户没有点击次数，然后进行汤普森采样。</p>
-<ol>
-<li>取出每一个候选臂对应的参数a和b。</li>
-<li>每个候选臂根据Beta(a,b)产生一个随机数。</li>
-<li>按随机数排序，输出最大值对应的候选臂。</li>
-<li>根据用户反馈，用户点击则a+1，否则b+1。</li>
-</ol>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> math
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-
-<span class="token keyword">class</span> <span class="token class-name">Bandits</span><span class="token punctuation">:</span>
-    
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>n_bandits <span class="token operator">=</span> <span class="token number">10</span> <span class="token comment" spellcheck="true"># 10组老虎机</span>
-        self<span class="token punctuation">.</span>n_arms <span class="token operator">=</span> <span class="token number">5</span> <span class="token comment" spellcheck="true"># 5台老虎机（每台老虎机1个臂）</span>
-        self<span class="token punctuation">.</span>n_pulls <span class="token operator">=</span> <span class="token number">1000</span> <span class="token comment" spellcheck="true"># 总共拉1000次</span>
-        self<span class="token punctuation">.</span>strategies <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'random'</span><span class="token punctuation">,</span> <span class="token string">'epsilon_greedy'</span><span class="token punctuation">,</span> <span class="token string">'ucb'</span><span class="token punctuation">,</span> <span class="token string">'thompson_sample'</span><span class="token punctuation">]</span>
-        
-        <span class="token comment" spellcheck="true"># epsilon_greedy参数</span>
-        self<span class="token punctuation">.</span>epsilon <span class="token operator">=</span> <span class="token number">0.3</span>
-        self<span class="token punctuation">.</span>decay_rate <span class="token operator">=</span> <span class="token number">0.999</span>
-        self<span class="token punctuation">.</span>min_epsilon <span class="token operator">=</span> <span class="token number">0.1</span>
-        
-    <span class="token keyword">def</span> <span class="token function">pick_arm</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> strategy<span class="token punctuation">,</span> q_values<span class="token punctuation">,</span> counts<span class="token punctuation">,</span> success<span class="token punctuation">,</span> failure<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token triple-quoted-string string">""" 选择臂
-        :strategy 策略
-        :q_value 每个臂的收益
-        :counts 总次数
-        :success 收益
-        :failure 遗憾
-        """</span>
-        <span class="token keyword">if</span> strategy <span class="token operator">==</span> <span class="token string">'random'</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>q_values<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        
-        <span class="token keyword">elif</span> strategy <span class="token operator">==</span> <span class="token string">'epsilon_greedy'</span><span class="token punctuation">:</span>
-            <span class="token comment" spellcheck="true"># [0.1, 0.3]</span>
-            epsilon <span class="token operator">=</span> max<span class="token punctuation">(</span>self<span class="token punctuation">.</span>epsilon<span class="token operator">*</span>self<span class="token punctuation">.</span>decay_rate<span class="token punctuation">,</span> self<span class="token punctuation">.</span>min_epsilon<span class="token punctuation">)</span>
-            <span class="token keyword">if</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>random<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> epsilon<span class="token punctuation">:</span>
-                best_arms_value <span class="token operator">=</span> np<span class="token punctuation">.</span>max<span class="token punctuation">(</span>q_values<span class="token punctuation">)</span>
-                best_arms <span class="token operator">=</span> np<span class="token punctuation">.</span>argwhere<span class="token punctuation">(</span>q_values <span class="token operator">==</span> best_arms_value<span class="token punctuation">)</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token keyword">return</span> best_arms<span class="token punctuation">[</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>best_arms<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-            <span class="token keyword">else</span><span class="token punctuation">:</span>
-                <span class="token keyword">return</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>q_values<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            
-        <span class="token keyword">elif</span> strategy <span class="token operator">==</span> <span class="token string">'ucb'</span><span class="token punctuation">:</span>
-            total_counts <span class="token operator">=</span> np<span class="token punctuation">.</span>sum<span class="token punctuation">(</span>counts<span class="token punctuation">)</span>
-            ucb_q_values <span class="token operator">=</span> q_values <span class="token operator">+</span> np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>np<span class="token punctuation">.</span>reciprocal<span class="token punctuation">(</span>counts<span class="token operator">+</span><span class="token number">0.001</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2</span><span class="token operator">*</span>math<span class="token punctuation">.</span>log<span class="token punctuation">(</span>total_counts<span class="token operator">+</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-            best_arms_value <span class="token operator">=</span> np<span class="token punctuation">.</span>max<span class="token punctuation">(</span>ucb_q_values<span class="token punctuation">)</span>
-            best_arms <span class="token operator">=</span> np<span class="token punctuation">.</span>argwhere<span class="token punctuation">(</span>ucb_q_values <span class="token operator">==</span> best_arms_value<span class="token punctuation">)</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token keyword">return</span> best_arms<span class="token punctuation">[</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>best_arms<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-        
-        <span class="token keyword">elif</span> strategy <span class="token operator">==</span> <span class="token string">'thompson_sample'</span><span class="token punctuation">:</span>
-            <span class="token triple-quoted-string string">""" 利用beta分布选择杆 """</span>
-            sample_means <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>len<span class="token punctuation">(</span>counts<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>counts<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-                sample_means<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>beta<span class="token punctuation">(</span>success<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> failure<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
-            <span class="token keyword">return</span> np<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span>sample_means<span class="token punctuation">)</span>
-            
-    <span class="token keyword">def</span> <span class="token function">plot_result</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token triple-quoted-string string">""" 绘制曲线 """</span>
-        fig <span class="token operator">=</span> plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        ax <span class="token operator">=</span> fig<span class="token punctuation">.</span>add_subplot<span class="token punctuation">(</span><span class="token number">111</span><span class="token punctuation">)</span>
-        
-        <span class="token keyword">for</span> st <span class="token keyword">in</span> self<span class="token punctuation">.</span>strategies<span class="token punctuation">:</span>
-            <span class="token comment" spellcheck="true"># 初始化</span>
-            <span class="token comment" spellcheck="true"># 记录10x5台老虎机拉杆次数</span>
-            best_arm_counts <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_bandits<span class="token punctuation">,</span> self<span class="token punctuation">.</span>n_pulls<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_bandits<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                <span class="token comment" spellcheck="true"># 每个杆是最大收益的概率</span>
-                arm_prob <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_arms<span class="token punctuation">)</span>
-                <span class="token comment" spellcheck="true"># 收益最大的杆</span>
-                best_arm <span class="token operator">=</span> np<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span>arm_prob<span class="token punctuation">)</span>
-                <span class="token comment" spellcheck="true"># 收益率</span>
-                q_values <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_arms<span class="token punctuation">)</span>
-                <span class="token comment" spellcheck="true"># 统计拉杆次数</span>
-                counts <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_arms<span class="token punctuation">)</span>
-                success <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_arms<span class="token punctuation">)</span>
-                failure <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_arms<span class="token punctuation">)</span>
-                
-                <span class="token comment" spellcheck="true"># 拉1000次杆</span>
-                <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>n_pulls<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                    <span class="token comment" spellcheck="true"># 根据不同策略选择臂</span>
-                    _arm <span class="token operator">=</span> self<span class="token punctuation">.</span>pick_arm<span class="token punctuation">(</span>st<span class="token punctuation">,</span> q_values<span class="token punctuation">,</span> counts<span class="token punctuation">,</span> success<span class="token punctuation">,</span> failure<span class="token punctuation">)</span>
-                    <span class="token comment" spellcheck="true"># 选择臂的收益</span>
-                    reward <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>binomial<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> arm_prob<span class="token punctuation">[</span>_arm<span class="token punctuation">]</span><span class="token punctuation">)</span>
-                    <span class="token comment" spellcheck="true"># 拉杆次数统计</span>
-                    counts<span class="token punctuation">[</span>_arm<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>
-                    <span class="token comment" spellcheck="true"># 更新收益</span>
-                    q_values<span class="token punctuation">[</span>_arm<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token punctuation">(</span>reward<span class="token operator">-</span>q_values<span class="token punctuation">[</span>_arm<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">/</span> counts<span class="token punctuation">[</span>_arm<span class="token punctuation">]</span>
-                    <span class="token comment" spellcheck="true"># 成功的收益</span>
-                    success<span class="token punctuation">[</span>_arm<span class="token punctuation">]</span> <span class="token operator">+=</span> reward
-                    <span class="token comment" spellcheck="true"># 失败的收益</span>
-                    failure<span class="token punctuation">[</span>_arm<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>reward<span class="token punctuation">)</span>
-                    best_arm_counts<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> counts<span class="token punctuation">[</span>best_arm<span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token number">100.0</span> <span class="token operator">/</span> <span class="token punctuation">(</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
-                <span class="token comment" spellcheck="true">#print('====== st:{}, i:{} '.format(st, i))</span>
-                <span class="token comment" spellcheck="true">#print('arm_prob: ', arm_prob)</span>
-                
-            <span class="token comment" spellcheck="true"># 横纵坐标</span>
-            y <span class="token operator">=</span> np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>best_arm_counts<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
-            x <span class="token operator">=</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token comment" spellcheck="true">#print('strategy: ', st)</span>
-            ax<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> label<span class="token operator">=</span>st<span class="token punctuation">)</span>
-            ax<span class="token punctuation">.</span>legend<span class="token punctuation">(</span>loc<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
-        
-        plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span><span class="token string">'steps'</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span><span class="token string">'optimal pull'</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>tight_layout<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>ylim<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">110</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-bandits <span class="token operator">=</span> Bandits<span class="token punctuation">(</span><span class="token punctuation">)</span>
-bandits<span class="token punctuation">.</span>plot_result<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<p><img src="/2021/04/02/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-bandit/2.png" alt="2"></p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>random表现最差，采用5个里面随机选择一个杆的方式，选择最高收益杆的概率趋近于0.2。</p>
-<p>汤普森采样表现最好，能够最快速的找到收益最大的杆，其次是Epsilon-Greedy、UCB。</p>
+                <p>未来几年，普通人可以选择的三种投资方式。</p>
+<p>一）一二线城市核心地段的房子。</p>
+<p>这个不用说，未来几年北上广深的核心地段的房子一直都是保值的。</p>
+<p>二）龙头公司的优质股票。</p>
+<p>随着大幅印钞，未来物价会跌，但是一些龙头公司的优质股票是一直保持升值的。现今这些公司一直处在高估值、高波动的状态。我们需要长期看好并且与泡沫共舞，从长远来看也可以获取不菲的收益。诚然，这种选择需要有一定的信心和技术门槛的。</p>
+<p>三）个人能力的投资。</p>
+<p>自身和子女教育是最好的投资方式。几乎零成本而终身且收益。这跟钱多少有没有关系，现在社会学习渠道和内容很多，个人提升不一定非要上清华北大。罗永浩中学文聘，曹德旺、李嘉诚小学文聘，鲁迅中学文聘。但是，中学文聘不等于中学水平。除了学习之外，创业试错，出国游学，大企业就职，参观展会，职业教育，读书演讲等这些都是提高个人能力。可能有人反驳，不是学习就一定有回报吗？不是7万研究生去送外卖了吗？而且很多人没怎么读书却成了社会精英，而有些人读了几十年的书也没有发财呢？这就需要知道读书和学习的关系。</p>
+<ul>
+<li>读书不是学习的唯一方式。</li>
+<li>文聘不等于认知水平。</li>
+<li>要承认每个人有不同的天赋。</li>
+</ul>
+<p>读书这件事不应该做横向比较，更应该和自身做对比。读书不一定是成功的全部因素，但也一定是必要因素。一个知识量大的人也许赚不到多少钱，但也许没有这些知识，他可能混的更惨。所以把多余的钱砸在自己和孩子个人能力提高上是一件性价比高且很有必要的一件事。</p>
 
                 
             </div>
@@ -596,7 +465,7 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://puhaoran.github.io/2021/04/02/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-bandit/">https://puhaoran.github.io/2021/04/02/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-bandit/</a>
+                    <a href="https://puhaoran.github.io/2021/04/04/wei-lai-de-san-chong-tou-zi-fang-shi/">https://puhaoran.github.io/2021/04/04/wei-lai-de-san-chong-tou-zi-fang-shi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -634,8 +503,8 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/">
-                                    <span class="chip bg-color">深度学习推荐系统实战</span>
+                                <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/">
+                                    <span class="chip bg-color">人生感悟</span>
                                 </a>
                             
                         </div>
@@ -807,9 +676,10 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/04/04/wei-lai-de-san-chong-tou-zi-fang-shi/">
                     <div class="card-image">
@@ -827,9 +697,9 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -842,6 +712,7 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -860,13 +731,13 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/30/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-q-learning/">
+                <a href="/2021/04/02/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-bandit/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="深度强化学习实战之Q-learning">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="深度学习推荐系统实战之Bandit">
                         
-                        <span class="card-title">深度强化学习实战之Q-learning</span>
+                        <span class="card-title">深度学习推荐系统实战之Bandit</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -877,14 +748,14 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    强化学习
+                            <a href="/categories/%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/" class="post-category">
+                                    推荐算法
                                 </a>
                             
                             
@@ -894,8 +765,8 @@ bandits<span class="token punctuation">.</span>plot_result<span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98/">
-                        <span class="chip bg-color">深度强化学习实战</span>
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/">
+                        <span class="chip bg-color">深度学习推荐系统实战</span>
                     </a>
                     
                 </div>
