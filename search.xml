@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>深度学习推荐系统实战之Contextual-Bandit</title>
+      <link href="2021/04/05/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-contextual-bandit/"/>
+      <url>2021/04/05/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-contextual-bandit/</url>
+      
+        <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>个性化推荐系统通过调整服务内容（新闻、广告等）来为用户提供个性化服务。尽管当前阶段已经取得了一些进步，但是仍存在一些具有挑战性的问题。</p><ol><li>web服务要求动态更新推荐内容，传统的协同过滤方法不够灵活。</li><li>web服务要求推荐系统具有一定的模型学习效率并保证推荐实时性。</li></ol><p>论文把新闻推荐视为带有上下文信息的多臂老虎机问题。采用的一种有效的做法是根据用户和文章的上下文信息，选择收益最高的文章推荐给用户，同时基于用户点击反馈动态调整策略，从长远来看可以最大化用户的总点击次数。该算法在计算上高效且有很好的理论依据。实验证明加入上下文的Bandit算法比传统Bandit算法的点击率高了12.5%。当数据稀疏时，这个优势甚至更大。论文给出了LinUCB方法和几种传统bandit方法的离线实验对比。</p><p>传统的Bandit算法所存在的问题是没有利用不同臂(物品)之间的特征信息，当一个新物品加入内容库，我们只能从零开始积累用户的点击反馈。针对这种情况，识别物品之间的关联并具备一定的泛化能力就显得至关重要。例如，对于男青年而言，ipad相比养老计划对他更具吸引力。通过提取青年和iap特征，bandit算法可以将用户/文章泛化到下一个用户/文章，快速调整文章，解决冷启动问题。</p><p>LinUCB分为两种。</p><ul><li>线性不相交的disjoint LinUCB</li><li>混合相交的hybrid LinUCB</li></ul><h2 id="disjoint-LinUCB"><a href="#disjoint-LinUCB" class="headerlink" title="disjoint LinUCB"></a>disjoint LinUCB</h2><p>disjoint LinUCB的不同臂之间参数不共享。</p><p><img src="/2021/04/05/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-contextual-bandit/1.png" alt="1"></p><p>根据伪代码可以将算法流程分成两步，第一步取最大收益的臂，第二步根据反馈结果更新参数。</p><h5 id="选择最大收益的臂"><a href="#选择最大收益的臂" class="headerlink" title="选择最大收益的臂"></a>选择最大收益的臂</h5><p>一个臂进行m次推荐过程中，积累了m个样本，每一个样本的维度是d，则形成m×d维度的D矩阵。<br>其中m个样本含有用户点击/不点击的反馈信息，组成一个m×1的列向量C。</p><p>$D_{m×d}θ_{d×1}=C_{m×1}$</p><p>根据岭回归的矩阵解法，可以推导出</p><p>$θ_{d×1}=(D_{m×d}^{T}D_{m×d}+I_{d×d})^{-1}D_{m×d}^{T}C_{m×1}$</p><p>简化表示，采用A和b代表公式的主要部分。</p><p>$A=D_{m×d}^{T}D_{m×d}+I_{d×d}$</p><p>$b=D_{m×d}^{T}C_{m×1}$</p><p>则$θ_{d×1}=A^{-1}b$。</p><p>预测的期望收益为</p><p>$r=x_{d×1}^{T}θ_{d×1}$</p><p>置信区间上边界为</p><p>$b=α\sqrt{x_{d×1}^{T}(D_{m×d}^{T}D_{m×d}+I_{d×d})^{-1}x_{d×1}}$</p><p>$=α\sqrt{x_{d×1}^{T}A^{-1}x_{d×1}}$</p><p>臂的收益 = 预估期望收益 + 置信区间上界</p><p>按所有臂的收益进行排序，可以得到一个物品推荐列表。</p><h5 id="根据反馈结果更新参数"><a href="#根据反馈结果更新参数" class="headerlink" title="根据反馈结果更新参数"></a>根据反馈结果更新参数</h5><p>当一个臂被推荐出去之后，样本$D_{m×d}$变为$D_{(m+1)×d}$，A变为$A+x_{d×1}x_{d×1}^{T}$，b变为$b+rx_{d×1}$（r是回报），根据A和b可以更新θ。</p><h2 id="实验评估"><a href="#实验评估" class="headerlink" title="实验评估"></a>实验评估</h2><p><img src="/2021/04/05/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-contextual-bandit/2.png" alt="2"><br>雅虎首页的F1位置使用了该算法，并进行了为期一周的测试。</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>《A Contextual-Bandit Approach to<br>Personalized News Article Recommendation》<a href="https://arxiv.org/pdf/1003.0146.pdf">https://arxiv.org/pdf/1003.0146.pdf</a></p><p>《LinUCB论文的思想解读、场景应用与痛点说明》<a href="https://zhuanlan.zhihu.com/p/127189465">https://zhuanlan.zhihu.com/p/127189465</a></p><p>《Contextual Bandit算法在推荐系统中的实现及应用》<a href="https://zhuanlan.zhihu.com/p/35753281">https://zhuanlan.zhihu.com/p/35753281</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 推荐算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 深度学习推荐系统实战 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>未来几年，普通人可选择的三种投资方式</title>
       <link href="2021/04/04/wei-lai-de-san-chong-tou-zi-fang-shi/"/>
       <url>2021/04/04/wei-lai-de-san-chong-tou-zi-fang-shi/</url>
