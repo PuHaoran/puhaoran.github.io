@@ -457,7 +457,37 @@ if (windowWidth > 768) {
 <p>臂的收益 = 预估期望收益 + 置信区间上界</p>
 <p>按所有臂的收益进行排序，可以得到一个物品推荐列表。</p>
 <h5 id="根据反馈结果更新参数"><a href="#根据反馈结果更新参数" class="headerlink" title="根据反馈结果更新参数"></a>根据反馈结果更新参数</h5><p>当一个臂被推荐出去之后，样本$D_{m×d}$变为$D_{(m+1)×d}$，A变为$A+x_{d×1}x_{d×1}^{T}$，b变为$b+rx_{d×1}$（r是回报），根据A和b可以更新θ。</p>
-<h2 id="实验评估"><a href="#实验评估" class="headerlink" title="实验评估"></a>实验评估</h2><p><img src="/2021/04/05/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-contextual-bandit/2.png" alt="2"><br>雅虎首页的F1位置使用了该算法，并进行了为期一周的测试。</p>
+<h2 id="实验评估"><a href="#实验评估" class="headerlink" title="实验评估"></a>实验评估</h2><p>相比机器学习中的监督学习问题，基于环境的Bandit算法的评估更加困难。我们的目标是衡量bandit算法π的效果，每次臂的选择是基于前一次交互信息。<br>似乎唯一可行的评估方法就是在实时数据中运行该算法。我们能够收集到的只有之前采用不同策略获取到的离线日志，尚不清楚如何评估此类日志数据。这类评估问题被视为”离线策略评估问题“中的特例问题。</p>
+<p>一种解决方案是建立一个在日志数据中模拟bandit过程的模拟器。然后，使用模拟器评估π。但是建立模拟器的过程会引入偏差，很难证明该方法的有效性。我们提出一种简单的方法实施，基于记录的数据且无偏差。</p>
+<p>我们的目标是使用离线数据来评估bandit算法π。π是一个策略，根据历史$h_{t-1}$和上下文向量$x_{t1},…,x_{tK}$在时间t选择臂$a_{t}$。</p>
+<p>采用算法<em>3</em>所示的评估方法。T个离线日志，一步一步遍历事件。在给定当前历史行为$h_{t-1}$的情况下，如果策略π选择一个与日志策略相同的臂a，则保留该事件，并将其添加到历史记录中，更新总收益$R_{T}$。否则当策略π选择一个与日志策略不同的臂a，则该算法忽略该日志，不进行任何操作。</p>
+<p><img src="/2021/04/05/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-contextual-bandit/3.png" alt="3"></p>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><p>雅虎首页的F1位置使用了该算法，并进行了为期一周的测试。雅虎的今日头条是Internet上访问量最大的模块。今日头条模块放置四篇高质量的文章，四篇文章是从人工编辑的文章库中选出，每小时刷新一次。如下图所示，默认F1处的文章大图显示。我们希望排名根据个人兴趣提供文章，并突出显示对于该访客最具吸引力的文章。</p>
+<p><img src="/2021/04/05/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-contextual-bandit/2.png" alt="2"></p>
+<h2 id="实验设置"><a href="#实验设置" class="headerlink" title="实验设置"></a>实验设置</h2><h5 id="数据收集"><a href="#数据收集" class="headerlink" title="数据收集"></a>数据收集</h5><p>5月1日，以当天的日志（470万）为模型确定每种bandit算法的最佳参数，随后使用调整后的参数运行算法。</p>
+<p>5月3日-9日，以为期一周的日志（3600万）来评估模型。</p>
+<h5 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h5><p>用户特征</p>
+<ul>
+<li>人口统计信息：性别(2类)和年龄(离散为10段)</li>
+<li>地理特征：全球和美国各州(200)</li>
+<li>行为特征：1000个one-hot编码雅虎用户消费历史记录。</li>
+</ul>
+<p>文章特征</p>
+<ul>
+<li><p>URL类别：文章分类(数十)</p>
+</li>
+<li><p>人工编辑类别：人工编辑主题(数十)</p>
+</li>
+</ul>
+<p>文章特征进行了one-hot编码，然后每个特征向量归一化为单位长度，增加了每个特征向量具有值为1的恒定特征。（为何增加一个特征向量为1的恒定特征呢？）</p>
+<h5 id="结果对比"><a href="#结果对比" class="headerlink" title="结果对比"></a>结果对比</h5><p>算法分为三类：</p>
+<p>I 未使用feature的bandit算法</p>
+<pre><code>- random
+
+- e-greedy
+
+- 无所不知 策略达到最佳经验时，得出的无关上下文的点击率。首先计算每篇文章的经验点击率，然后始终选择最高经验点击率的文章。
+</code></pre>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>《A Contextual-Bandit Approach to<br>Personalized News Article Recommendation》<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1003.0146.pdf">https://arxiv.org/pdf/1003.0146.pdf</a></p>
 <p>《LinUCB论文的思想解读、场景应用与痛点说明》<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/127189465">https://zhuanlan.zhihu.com/p/127189465</a></p>
 <p>《Contextual Bandit算法在推荐系统中的实现及应用》<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35753281">https://zhuanlan.zhihu.com/p/35753281</a></p>
