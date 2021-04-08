@@ -482,12 +482,14 @@ if (windowWidth > 768) {
 <p>文章特征进行了one-hot编码，然后每个特征向量归一化为单位长度，增加了每个特征向量具有值为1的恒定特征。（为何增加一个特征向量为1的恒定特征呢？）</p>
 <h5 id="结果对比"><a href="#结果对比" class="headerlink" title="结果对比"></a>结果对比</h5><p>算法分为三类：</p>
 <p>I 未使用feature的bandit算法</p>
-<pre><code>- random
-
-- e-greedy
-
-- 无所不知 策略达到最佳经验时，得出的无关上下文的点击率。首先计算每篇文章的经验点击率，然后始终选择最高经验点击率的文章。
-</code></pre>
+<ul>
+<li><p>random</p>
+</li>
+<li><p>e-greedy</p>
+</li>
+<li><p>无所不知 策略达到最佳经验时，得出的无关上下文的点击率。首先计算每篇文章的经验点击率，然后始终选择最高经验点击率的文章。</p>
+</li>
+</ul>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>《A Contextual-Bandit Approach to<br>Personalized News Article Recommendation》<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1003.0146.pdf">https://arxiv.org/pdf/1003.0146.pdf</a></p>
 <p>《LinUCB论文的思想解读、场景应用与痛点说明》<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/127189465">https://zhuanlan.zhihu.com/p/127189465</a></p>
 <p>《Contextual Bandit算法在推荐系统中的实现及应用》<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35753281">https://zhuanlan.zhihu.com/p/35753281</a></p>
