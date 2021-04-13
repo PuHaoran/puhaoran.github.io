@@ -438,105 +438,105 @@ if (windowWidth > 768) {
 <li>oneHot</li>
 <li>multiHot</li>
 </ol>
-<pre><code>import os
-import findspark
-findspark.init()
-from pyspark import SparkConf
-from pyspark.sql import SparkSession
-from pyspark.ml import Pipeline
-from pyspark.sql import functions as F
-from pyspark.sql.types import *
-from pyspark.sql.functions import *
-from pyspark.ml.linalg import VectorUDT, Vectors
-from pyspark.ml.feature import OneHotEncoder, StringIndexer, QuantileDiscretizer, MinMaxScaler
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> os
+<span class="token keyword">import</span> findspark
+findspark<span class="token punctuation">.</span>init<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">from</span> pyspark <span class="token keyword">import</span> SparkConf
+<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>sql <span class="token keyword">import</span> SparkSession
+<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>ml <span class="token keyword">import</span> Pipeline
+<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>sql <span class="token keyword">import</span> functions <span class="token keyword">as</span> F
+<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>types <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>functions <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>ml<span class="token punctuation">.</span>linalg <span class="token keyword">import</span> VectorUDT<span class="token punctuation">,</span> Vectors
+<span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>ml<span class="token punctuation">.</span>feature <span class="token keyword">import</span> OneHotEncoder<span class="token punctuation">,</span> StringIndexer<span class="token punctuation">,</span> QuantileDiscretizer<span class="token punctuation">,</span> MinMaxScaler
 
-# 参数设置
-ROOT_DIR = 'file:///Users/xxx/WalleRecSys'
+<span class="token comment" spellcheck="true"># 参数设置</span>
+ROOT_DIR <span class="token operator">=</span> <span class="token string">'file:///Users/xxx/WalleRecSys'</span>
 
 
-def parse_sparse_feature_onehot(movie_df):
-    """
+<span class="token keyword">def</span> <span class="token function">parse_sparse_feature_onehot</span><span class="token punctuation">(</span>movie_df<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
     稀疏特征onehot编码
     :param movie_df:
     :return:
-    """
-    _movie_df = movie_df.withColumn("movieIdNumber", F.col("movieId").cast(IntegerType()))
-    encoder = OneHotEncoder(inputCol='movieIdNumber', outputCol='movieIdOneHot', dropLast=False)
-    _sparse_df = encoder.transform(_movie_df)
-    _sparse_df.printSchema()
-    # movieIdNumber倒序展示
-    _sparse_df.orderBy(desc("movieIdNumber")).show()
+    """</span>
+    _movie_df <span class="token operator">=</span> movie_df<span class="token punctuation">.</span>withColumn<span class="token punctuation">(</span><span class="token string">"movieIdNumber"</span><span class="token punctuation">,</span> F<span class="token punctuation">.</span>col<span class="token punctuation">(</span><span class="token string">"movieId"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cast<span class="token punctuation">(</span>IntegerType<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    encoder <span class="token operator">=</span> OneHotEncoder<span class="token punctuation">(</span>inputCol<span class="token operator">=</span><span class="token string">'movieIdNumber'</span><span class="token punctuation">,</span> outputCol<span class="token operator">=</span><span class="token string">'movieIdOneHot'</span><span class="token punctuation">,</span> dropLast<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    _sparse_df <span class="token operator">=</span> encoder<span class="token punctuation">.</span>transform<span class="token punctuation">(</span>_movie_df<span class="token punctuation">)</span>
+    _sparse_df<span class="token punctuation">.</span>printSchema<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># movieIdNumber倒序展示</span>
+    _sparse_df<span class="token punctuation">.</span>orderBy<span class="token punctuation">(</span>desc<span class="token punctuation">(</span><span class="token string">"movieIdNumber"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-def array_to_multi_vector(genre_indexes, index_size):
-    genre_indexes.sort()
-    fill_list = [1.0 for _ in range(len(genre_indexes))]
-    return Vectors.sparse(index_size, genre_indexes, fill_list)
+<span class="token keyword">def</span> <span class="token function">array_to_multi_vector</span><span class="token punctuation">(</span>genre_indexes<span class="token punctuation">,</span> index_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    genre_indexes<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    fill_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1.0</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>genre_indexes<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> Vectors<span class="token punctuation">.</span>sparse<span class="token punctuation">(</span>index_size<span class="token punctuation">,</span> genre_indexes<span class="token punctuation">,</span> fill_list<span class="token punctuation">)</span>
 
 
-def parse_sparse_feature_multihot(movie_df):
-    _movie_df = movie_df.select("movieId", "title", explode(
-        split(F.col("genres"), "\\|").cast(ArrayType(StringType()))
-    ).alias('genre'))
-    print('multihot _movie_df: ')
-    _movie_df.show()
-    # genre列进行Index编码并转化为Int类型
-    string_index_model = StringIndexer(inputCol='genre', outputCol='genre_index')
-    genre_index_df = string_index_model.fit(_movie_df).transform(_movie_df).withColumn(
-        "genre_index_int", F.col("genre_index").cast(IntegerType())
-    )
-    index_size = genre_index_df.agg(max(F.col("genre_index_int"))).head()[0] + 1
-    _temp_movie_df = genre_index_df.groupBy("movieId").agg(
-        F.collect_list("genre_index_int").alias("genre_indexes")
-    ).withColumn("index_size", F.lit(index_size))
-    _sparse_df = _temp_movie_df.withColumn("multihot", udf(array_to_multi_vector, VectorUDT())(F.col("genre_indexes"), F.col("index_size")))
-    print('multihot_df: ')
-    _sparse_df.printSchema()
-    _sparse_df.show()
+<span class="token keyword">def</span> <span class="token function">parse_sparse_feature_multihot</span><span class="token punctuation">(</span>movie_df<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    _movie_df <span class="token operator">=</span> movie_df<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"movieId"</span><span class="token punctuation">,</span> <span class="token string">"title"</span><span class="token punctuation">,</span> explode<span class="token punctuation">(</span>
+        split<span class="token punctuation">(</span>F<span class="token punctuation">.</span>col<span class="token punctuation">(</span><span class="token string">"genres"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"\\|"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cast<span class="token punctuation">(</span>ArrayType<span class="token punctuation">(</span>StringType<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">.</span>alias<span class="token punctuation">(</span><span class="token string">'genre'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'multihot _movie_df: '</span><span class="token punctuation">)</span>
+    _movie_df<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># genre列进行Index编码并转化为Int类型</span>
+    string_index_model <span class="token operator">=</span> StringIndexer<span class="token punctuation">(</span>inputCol<span class="token operator">=</span><span class="token string">'genre'</span><span class="token punctuation">,</span> outputCol<span class="token operator">=</span><span class="token string">'genre_index'</span><span class="token punctuation">)</span>
+    genre_index_df <span class="token operator">=</span> string_index_model<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>_movie_df<span class="token punctuation">)</span><span class="token punctuation">.</span>transform<span class="token punctuation">(</span>_movie_df<span class="token punctuation">)</span><span class="token punctuation">.</span>withColumn<span class="token punctuation">(</span>
+        <span class="token string">"genre_index_int"</span><span class="token punctuation">,</span> F<span class="token punctuation">.</span>col<span class="token punctuation">(</span><span class="token string">"genre_index"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cast<span class="token punctuation">(</span>IntegerType<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+    index_size <span class="token operator">=</span> genre_index_df<span class="token punctuation">.</span>agg<span class="token punctuation">(</span>max<span class="token punctuation">(</span>F<span class="token punctuation">.</span>col<span class="token punctuation">(</span><span class="token string">"genre_index_int"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>head<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span>
+    _temp_movie_df <span class="token operator">=</span> genre_index_df<span class="token punctuation">.</span>groupBy<span class="token punctuation">(</span><span class="token string">"movieId"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>agg<span class="token punctuation">(</span>
+        F<span class="token punctuation">.</span>collect_list<span class="token punctuation">(</span><span class="token string">"genre_index_int"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>alias<span class="token punctuation">(</span><span class="token string">"genre_indexes"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">.</span>withColumn<span class="token punctuation">(</span><span class="token string">"index_size"</span><span class="token punctuation">,</span> F<span class="token punctuation">.</span>lit<span class="token punctuation">(</span>index_size<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    _sparse_df <span class="token operator">=</span> _temp_movie_df<span class="token punctuation">.</span>withColumn<span class="token punctuation">(</span><span class="token string">"multihot"</span><span class="token punctuation">,</span> udf<span class="token punctuation">(</span>array_to_multi_vector<span class="token punctuation">,</span> VectorUDT<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>F<span class="token punctuation">.</span>col<span class="token punctuation">(</span><span class="token string">"genre_indexes"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> F<span class="token punctuation">.</span>col<span class="token punctuation">(</span><span class="token string">"index_size"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'multihot_df: '</span><span class="token punctuation">)</span>
+    _sparse_df<span class="token punctuation">.</span>printSchema<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    _sparse_df<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-def parse_dense_feature(rating_df):
-    """ 分桶、归一化操作 """
-    rating_df.show()
-    # 计算rating均值和方差
-    _rating_df = rating_df.groupBy('movieId').agg(F.count(F.lit(1)).alias('rating_count'),
-                                                  F.avg('rating').alias('rating_avg'),
-                                                  F.variance('rating').alias('rating_var')) \
-        .withColumn('rating_avg_vector', udf(lambda x: Vectors.dense(x), VectorUDT())('rating_avg'))
-    _rating_df.show(10)
-    # 分桶bucketing
-    rating_count_discretizer = QuantileDiscretizer(numBuckets=100, inputCol='rating_count', outputCol='rating_count_bucket')
-    # 归一化normalization
-    rating_scaler = MinMaxScaler(inputCol='rating_avg_vector', outputCol='rating_avg_vector_scaled')
-    pipeline_stages = [rating_count_discretizer, rating_scaler]
-    feature_pipeline = Pipeline(stages=pipeline_stages)
-    _dense_df = feature_pipeline.fit(_rating_df).transform(_rating_df)
-    _dense_df.show()
+<span class="token keyword">def</span> <span class="token function">parse_dense_feature</span><span class="token punctuation">(</span>rating_df<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" 分桶、归一化操作 """</span>
+    rating_df<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># 计算rating均值和方差</span>
+    _rating_df <span class="token operator">=</span> rating_df<span class="token punctuation">.</span>groupBy<span class="token punctuation">(</span><span class="token string">'movieId'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>agg<span class="token punctuation">(</span>F<span class="token punctuation">.</span>count<span class="token punctuation">(</span>F<span class="token punctuation">.</span>lit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>alias<span class="token punctuation">(</span><span class="token string">'rating_count'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                                  F<span class="token punctuation">.</span>avg<span class="token punctuation">(</span><span class="token string">'rating'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>alias<span class="token punctuation">(</span><span class="token string">'rating_avg'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                                  F<span class="token punctuation">.</span>variance<span class="token punctuation">(</span><span class="token string">'rating'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>alias<span class="token punctuation">(</span><span class="token string">'rating_var'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> \
+        <span class="token punctuation">.</span>withColumn<span class="token punctuation">(</span><span class="token string">'rating_avg_vector'</span><span class="token punctuation">,</span> udf<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> Vectors<span class="token punctuation">.</span>dense<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> VectorUDT<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">'rating_avg'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    _rating_df<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># 分桶bucketing</span>
+    rating_count_discretizer <span class="token operator">=</span> QuantileDiscretizer<span class="token punctuation">(</span>numBuckets<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span> inputCol<span class="token operator">=</span><span class="token string">'rating_count'</span><span class="token punctuation">,</span> outputCol<span class="token operator">=</span><span class="token string">'rating_count_bucket'</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># 归一化normalization</span>
+    rating_scaler <span class="token operator">=</span> MinMaxScaler<span class="token punctuation">(</span>inputCol<span class="token operator">=</span><span class="token string">'rating_avg_vector'</span><span class="token punctuation">,</span> outputCol<span class="token operator">=</span><span class="token string">'rating_avg_vector_scaled'</span><span class="token punctuation">)</span>
+    pipeline_stages <span class="token operator">=</span> <span class="token punctuation">[</span>rating_count_discretizer<span class="token punctuation">,</span> rating_scaler<span class="token punctuation">]</span>
+    feature_pipeline <span class="token operator">=</span> Pipeline<span class="token punctuation">(</span>stages<span class="token operator">=</span>pipeline_stages<span class="token punctuation">)</span>
+    _dense_df <span class="token operator">=</span> feature_pipeline<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>_rating_df<span class="token punctuation">)</span><span class="token punctuation">.</span>transform<span class="token punctuation">(</span>_rating_df<span class="token punctuation">)</span>
+    _dense_df<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 
-def main():
-    conf = SparkConf().setAppName('feature_engineering').setMaster('local')
-    spark = SparkSession.builder.config(conf=conf).getOrCreate()
-    movie_path = os.path.join(ROOT_DIR, 'src/main/resources/webroot/ml1m/movies.csv')
-    movie_df = spark.read.format('csv').option('header', 'true').load(movie_path)
-    print('movie_df: ')
-    movie_df.show(10)
-    movie_df.printSchema()
-    # 分类特征onehot编码示例
-    print('parse_sparse_feature_onehot: ')
-    parse_sparse_feature_onehot(movie_df)
-    # 分类特征multihot编码示例
-    print('parse_sparse_feature_multihot: ')
-    parse_sparse_feature_multihot(movie_df)
-    # 数值特征归一化、分桶示例
-    rating_path = os.path.join(ROOT_DIR, 'src/main/resources/webroot/ml1m/ratings.csv')
-    rating_df = spark.read.format('csv').option('header', 'true').load(rating_path)
-    print('rating_df feature: ')
-    parse_dense_feature(rating_df)
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    conf <span class="token operator">=</span> SparkConf<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>setAppName<span class="token punctuation">(</span><span class="token string">'feature_engineering'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>setMaster<span class="token punctuation">(</span><span class="token string">'local'</span><span class="token punctuation">)</span>
+    spark <span class="token operator">=</span> SparkSession<span class="token punctuation">.</span>builder<span class="token punctuation">.</span>config<span class="token punctuation">(</span>conf<span class="token operator">=</span>conf<span class="token punctuation">)</span><span class="token punctuation">.</span>getOrCreate<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    movie_path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>ROOT_DIR<span class="token punctuation">,</span> <span class="token string">'src/main/resources/webroot/ml1m/movies.csv'</span><span class="token punctuation">)</span>
+    movie_df <span class="token operator">=</span> spark<span class="token punctuation">.</span>read<span class="token punctuation">.</span>format<span class="token punctuation">(</span><span class="token string">'csv'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>option<span class="token punctuation">(</span><span class="token string">'header'</span><span class="token punctuation">,</span> <span class="token string">'true'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>load<span class="token punctuation">(</span>movie_path<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'movie_df: '</span><span class="token punctuation">)</span>
+    movie_df<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+    movie_df<span class="token punctuation">.</span>printSchema<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># 分类特征onehot编码示例</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'parse_sparse_feature_onehot: '</span><span class="token punctuation">)</span>
+    parse_sparse_feature_onehot<span class="token punctuation">(</span>movie_df<span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># 分类特征multihot编码示例</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'parse_sparse_feature_multihot: '</span><span class="token punctuation">)</span>
+    parse_sparse_feature_multihot<span class="token punctuation">(</span>movie_df<span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true"># 数值特征归一化、分桶示例</span>
+    rating_path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>ROOT_DIR<span class="token punctuation">,</span> <span class="token string">'src/main/resources/webroot/ml1m/ratings.csv'</span><span class="token punctuation">)</span>
+    rating_df <span class="token operator">=</span> spark<span class="token punctuation">.</span>read<span class="token punctuation">.</span>format<span class="token punctuation">(</span><span class="token string">'csv'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>option<span class="token punctuation">(</span><span class="token string">'header'</span><span class="token punctuation">,</span> <span class="token string">'true'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>load<span class="token punctuation">(</span>rating_path<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'rating_df feature: '</span><span class="token punctuation">)</span>
+    parse_dense_feature<span class="token punctuation">(</span>rating_df<span class="token punctuation">)</span>
 
 
-if __name__ == '__main__':
-    main()
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    main<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 
                 
