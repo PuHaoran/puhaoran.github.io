@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="《Time Series Clustering of Online Gambling Activities for Addicted Users’ Detection》翻译, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="keywords" content="《未来简史》读书笔记, 算法策略，深度思考，深度学习，个人成长">
     <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>《Time Series Clustering of Online Gambling Activities for Addicted Users’ Detection》翻译 | 深度实验室</title>
+    <title>《未来简史》读书笔记 | 深度实验室</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -259,12 +259,12 @@ if (windowWidth > 768) {
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">《Time Series Clustering of Online Gambling Activities for Addicted Users’ Detection》翻译</h1>
+                    <h1 class="description center-align post-title">《未来简史》读书笔记</h1>
                 </div>
             </div>
         </div>
@@ -380,12 +380,8 @@ if (windowWidth > 768) {
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%81%9A%E7%B1%BB/">
-                                <span class="chip bg-color">聚类</span>
-                            </a>
-                        
-                            <a href="/tags/%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90/">
-                                <span class="chip bg-color">用户行为分析</span>
+                            <a href="/tags/%E8%AF%BB%E4%B9%A6/">
+                                <span class="chip bg-color">读书</span>
                             </a>
                         
                     </div>
@@ -396,8 +392,8 @@ if (windowWidth > 768) {
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%81%9A%E7%B1%BB/" class="post-category">
-                                聚类
+                            <a href="/categories/%E8%AF%BB%E4%B9%A6/" class="post-category">
+                                读书
                             </a>
                         
                     </div>
@@ -409,7 +405,7 @@ if (windowWidth > 768) {
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-13
+                    2021-04-19
                 </div>
                 
 
@@ -430,66 +426,7 @@ if (windowWidth > 768) {
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>自从全球范围内对赌博服务的需求开始扩散以来，其扩展持续稳定发展。也就是说，在线赌博是每个欧洲国家/地区的主要行业，为商业参与者和政府带来数十亿欧元的收入。尽管这样明显的有益效果是，在线赌博最终是一项巨大的社会实验，具有潜在的灾难性的社会和个人后果，可能导致社会整体恶化和家庭关系。尽管这个问题与社会相关，但缺乏工具根据每日收集的数据来表征在线赌徒的行为博彩平台。<br>本文使用时间序列聚类算法，可以帮助决策者识别与潜在病态赌徒相关的行为。尤其是实验性的通过分析体育赛事赌注和黑杰克数据获得的结果证明了提出的用于检测关键（即病理性）参与者的方法。该算法是第一个与葡萄牙当局合作开发的系统控制博彩活动的组件。当局缺乏可以识别出赌博成瘾者的工具。为了应对这个问题和研究机构合作开发一种基于机器学习的工具，该工具可以利用每天收集的大量数据分析在线用户行为，以检测出与上瘾赌徒有关的行为。所以，专门设计了一种时间序列聚类算法DTW。DTW可以识别不寻常行为特征的类簇。（例如，花费大量金币，平台访问次数）</p>
-<p>论文分为5节，第2节介绍病理性赌博检测相关文献，第3节介绍实验设置，第4节讨论结果实现，第5节总结论文的未来研究方向。</p>
-<h2 id="3-实验阶段"><a href="#3-实验阶段" class="headerlink" title="3.实验阶段"></a>3.实验阶段</h2><p>本部分介绍实验使用的数据以及实验流程。</p>
-<p>数据由葡萄牙赌博检测和监管局提供，使用基于DTW的Kmeans算法来进行时间序列聚类。</p>
-<h5 id="3-1-数据"><a href="#3-1-数据" class="headerlink" title="3.1. 数据"></a>3.1. 数据</h5><p>实验阶段使用的数据来自十个不同的在线赌博运营商，每个运营商都提供两个月度数据集，其中包括体育赛事和二十一点赌注<br>数据。</p>
-<pre><code>• player_id: 玩家ID
-• player_logon: 用户名
-• cod_ficha: 下注ID
-• cod_ficha_jog: 平台外部代码
-• cod_aptr_jog: 投注代码
-• timestp_ini: 投注开始时间
-• timestp_fim: 投注结束时间
-• timestp: 用户下注操作时间戳
-• a_saldo_ini: 投注开始前的金额
-• a_valor: 投注金额
-• a_saldo_fim: 投注结束后的金额
-• a_bonus_ini: 投注开始前的玩家金币
-• a_bonus: 下注金币
-• a_bonus_fim: 下注结束时的玩家奖励
-• g_ganho: 下注赢取的金币
-</code></pre>
-<p>在数据准备阶段获取2种不同的数据集，一个是体育竞技，一个是黑jack。<br>整个数据预处理过程可以分为3部分：聚合、串联和创建时间序列。除第一步以外，最后2步对于两种游戏是相似的。<br>注意的是时间序列的每个值代表的是单次下注后去的金币数，正、零、负。</p>
-<p>聚合阶段目的在于减少初始数据集大小。这里仅使用9列数据</p>
-<pre><code>• player_id
-• player_logon
-• cod_ficha
-• cod_ficha_jog
-• cod_aptr_jog
-• timestp: the instant of the bet.
-• a_valor: value of the bet, including bonuses.
-• g_ganho: balance of the bet.
-</code></pre>
-<p>最终的数据集字段：</p>
-<pre><code>•player_id：玩家ID
-•time_stamp：下注的时间序列
-•player_logon：用户名
-•cod_ficha：下注ID序列
-•cod_aptr_jog：投注代码
-•cod_ficha_jog：平台外部代码序列
-•g_ganho：玩家下注余额序列
-•a_valor：a_valor的序列
-•g_ganho_tot：玩家赢金币总和
-•a_saldo_tot：玩家下注值的总和
-</code></pre>
-<p>提供数据集的相关信息。原始数据集数量，它们的总大小，最终数据集的大小以及其中包含的时间序列数。<br>所有时间序列范围为一个月。<br><img src="/2021/04/13/time-series-clustering-of-online-gambling-activities-for-addicted-users-detection-fan-yi/1.png" alt="1"></p>
-<h5 id="3-2-实验设定"><a href="#3-2-实验设定" class="headerlink" title="3.2. 实验设定"></a>3.2. 实验设定</h5><p>通过Kmeans算法对数据预处理后的数据进行聚类。k的最佳值（形成的簇数）可以使用手肘法（elbow）获得。轮廓分数（silhouette score）可以用于评估手肘法（elbow）结果的一致性。</p>
-<p>获得结果的策略如下：使用了elbow方法，k的选择范围是2到8，获得有关最佳类簇数量K值。然后，通过silhouette score进一步评估结果的一致性。</p>
-<p>我们采用python库tslearn中的时间序列k均值算法实现系统。但是，由于以下原因，我们不得不修改库源代码的某些部分：</p>
-<ul>
-<li>多次调用数据准备功能</li>
-<li>该算法的部分计算不是并行进行的。</li>
-</ul>
-<h2 id="结果讨论"><a href="#结果讨论" class="headerlink" title="结果讨论"></a>结果讨论</h2><h5 id="4-1-体育竞技"><a href="#4-1-体育竞技" class="headerlink" title="4.1. 体育竞技"></a>4.1. 体育竞技</h5><p>通过数据预处理工作之后，在时间序列上应用k均值算法。首先使用手肘法，获得最佳k值。如下图所示，最佳k值是4或5。<br>然后，针对最佳k值计算轮廓分数。k=4的值为0.620，k=5的值为0.317。两个值都是正值，说明都是合适的，但是第一个值几乎是第二个的二倍。<br>因此我们选择k=4作为k-means算法参数。<br><img src="/2021/04/13/time-series-clustering-of-online-gambling-activities-for-addicted-users-detection-fan-yi/2.png" alt="2"></p>
-<p>应用该算法后，我们获得了具有观测分布的四个聚类</p>
-<pre><code>•类别0：140个时间序列
-•类别1：1086时间序列
-•类别2：13,390个时间序列
-•类别3：467个时间序列 
-</code></pre>
-<p>图2显示每个组与下注数量、花费总金额、最高支出有关的箱线图。</p>
+                <p>20世纪人类在医学研究、经济改革和和平倡议上取得了巨大的进步的同时也建立起了我们有能力控制这些问题的信心和底气。<br>当饥荒、瘟疫和战争发生的概率越来越小，会有那些事情会成为人类新议题呢？</p>
 
                 
             </div>
@@ -516,7 +453,7 @@ if (windowWidth > 768) {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://puhaoran.github.io/2021/04/13/time-series-clustering-of-online-gambling-activities-for-addicted-users-detection-fan-yi/">https://puhaoran.github.io/2021/04/13/time-series-clustering-of-online-gambling-activities-for-addicted-users-detection-fan-yi/</a>
+                    <a href="https://puhaoran.github.io/2021/04/19/wei-lai-jian-shi-du-shu-bi-ji/">https://puhaoran.github.io/2021/04/19/wei-lai-jian-shi-du-shu-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -554,12 +491,8 @@ if (windowWidth > 768) {
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%81%9A%E7%B1%BB/">
-                                    <span class="chip bg-color">聚类</span>
-                                </a>
-                            
-                                <a href="/tags/%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90/">
-                                    <span class="chip bg-color">用户行为分析</span>
+                                <a href="/tags/%E8%AF%BB%E4%B9%A6/">
+                                    <span class="chip bg-color">读书</span>
                                 </a>
                             
                         </div>
@@ -731,9 +664,60 @@ if (windowWidth > 768) {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/04/19/wei-lai-jian-shi-du-shu-bi-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="《未来简史》读书笔记">
+                        
+                        <span class="card-title">《未来简史》读书笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AF%BB%E4%B9%A6/" class="post-category">
+                                    读书
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AF%BB%E4%B9%A6/">
+                        <span class="chip bg-color">读书</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/04/13/shen-du-xue-xi-tui-jian-xi-tong-shi-zhan-zhi-spark-te-zheng-gong-cheng/">
                     <div class="card-image">
@@ -751,9 +735,9 @@ if (windowWidth > 768) {
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -771,55 +755,6 @@ if (windowWidth > 768) {
                     
                     <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/">
                         <span class="chip bg-color">深度学习推荐系统实战</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="机器学习的可解释性">
-                        
-                        <span class="card-title">机器学习的可解释性</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-08
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    可解释性机器学习
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
-                        <span class="chip bg-color">可解释性机器学习</span>
                     </a>
                     
                 </div>

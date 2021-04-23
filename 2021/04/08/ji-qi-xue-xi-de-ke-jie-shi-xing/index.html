@@ -1,0 +1,1384 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="机器学习的可解释性, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>机器学习的可解释性 | 深度实验室</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<script type="text/javascript">
+//只在桌面版网页启用特效
+var windowWidth = $(window).width();
+if (windowWidth > 768) {
+    document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>');
+}
+</script>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">深度实验室</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">深度实验室</div>
+        <div class="logo-desc">
+            
+            深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">机器学习的可解释性</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">可解释性机器学习</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                可解释性机器学习
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-04-08
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>翻译自Machine Learning Explainability <a target="_blank" rel="noopener" href="https://www.kaggle.com/learn/machine-learning-explainability">https://www.kaggle.com/learn/machine-learning-explainability</a></p>
+<p>想要理解一个模型，需要了解以下内容：</p>
+<ol>
+<li>模型中各个特征的重要度。</li>
+<li>在每一次预估中，每个数据变量对预估结果的作用程度。</li>
+<li>每个特征在参与大量数据的预估时所发挥的作用。</li>
+</ol>
+<h2 id="特征重要度"><a href="#特征重要度" class="headerlink" title="特征重要度"></a>特征重要度</h2><p>特征重要度常用来度量特征的重要程度。下面我们通过一个示例了解具体如何使用特征重要度。</p>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/1.png" alt="1"></p>
+<p>如上图，我们希望用10岁时的数据预测一个人在20岁时的身高。数据中既包括非常有用的特征（10岁时的身高），也包括基本无用的特征（是否拥有袜子）。那么，如果随机的对数据的某列进行混排，而保持目标和其他列不变，混排过程会如何影响数据预测的准确性？</p>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/2.png" alt="2"></p>
+<p>模型依赖于各列特征，则模型的准确性会受到影响，依赖性越大的列，准确性越受到影响。所以，混排10岁身高特征会带来可怕的预测，如果混排是否拥有袜子特征，则预测不会带来这么大的损失。</p>
+<p>计算流程如下</p>
+<ol>
+<li>得到训练好的模型</li>
+<li>使用混排某个列的数据集进行预测。然后，使用预测值和目标值计算损失函数的损失量。采用损失量衡量变量的重要性。</li>
+<li>恢复数据并重复步骤2，直到计算出每一列的重要性为止。</li>
+</ol>
+<h5 id="ELI5"><a href="#ELI5" class="headerlink" title="ELI5"></a>ELI5</h5><p>ELI5是一个Python库，允许使用统一API可视化地调试各种机器学习模型。 它内置了对多个ML框架的支持，并提供了一种解释黑盒模型的方法。它有助于调试机器学习分类器并解释它们的预测。</p>
+<p>它为以下机器学习框架和包提供支持：</p>
+<ul>
+<li>scikit-learn。目前，ELI5允许解释scikit-learning线性分类器和回归量的权重和预测，将决策树打印为文本或SVG，显示特征重要性并解释决策树和基于树的集合的预测。支持Pipeline和FeatureUnion。ELI5通过scikit-learn了解文本处理实用程序，并可相应地突出显示文本数据。它还允许通过撤消散列来调试包含HashingVectorizer的scikit-learn管道。</li>
+<li>XGBoost  - 显示功能重要性并解释XGBClassifier，XGBRegressor和xgboost.Booster的预测。</li>
+<li>LightGBM  - 显示功能重要性并解释LGBMClassifier和LGBMRegressor的预测。</li>
+<li>lightning - 解释闪电分类器和回归量的权重和预测。</li>
+<li>sklearn-crfsuite。 ELI5允许检查sklearn_crfsuite.CRF模型的权重。</li>
+</ul>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><p>使用模型根据足球统计数据预测某球员是否是球队的全场最佳球员。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> eli5
+<span class="token keyword">from</span> eli5<span class="token punctuation">.</span>sklearn <span class="token keyword">import</span> PermutationImportance
+
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> train_test_split
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword">import</span> RandomForestClassifier
+
+data <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'./input/FIFA 2018 Statistics.csv'</span><span class="token punctuation">)</span>
+data<span class="token punctuation">.</span>head<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+y <span class="token operator">=</span> <span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token string">'Man of the Match'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"Yes"</span><span class="token punctuation">)</span>
+
+feature_names <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> data<span class="token punctuation">.</span>columns <span class="token keyword">if</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>dtype <span class="token keyword">in</span> <span class="token punctuation">[</span>np<span class="token punctuation">.</span>int64<span class="token punctuation">]</span><span class="token punctuation">]</span>
+X <span class="token operator">=</span> data<span class="token punctuation">[</span>feature_names<span class="token punctuation">]</span>
+train_X<span class="token punctuation">,</span> val_X<span class="token punctuation">,</span> train_y<span class="token punctuation">,</span> val_y <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+model <span class="token operator">=</span> RandomForestClassifier<span class="token punctuation">(</span>n_estimators<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span>
+                                  random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit<span class="token punctuation">(</span>train_X<span class="token punctuation">,</span> train_y<span class="token punctuation">)</span>
+
+p <span class="token operator">=</span> PermutationImportance<span class="token punctuation">(</span>model<span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit<span class="token punctuation">(</span>val_X<span class="token punctuation">,</span> val_y<span class="token punctuation">)</span>
+eli5<span class="token punctuation">.</span>show_weights<span class="token punctuation">(</span>p<span class="token punctuation">,</span> feature_names<span class="token operator">=</span>val_X<span class="token punctuation">.</span>columns<span class="token punctuation">.</span>tolist<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/6.png" alt="6"></p>
+<h5 id="解释特征重要性"><a href="#解释特征重要性" class="headerlink" title="解释特征重要性"></a>解释特征重要性</h5><p>每行的第一个数字代表，通过混排特征降低了多少模型性能。重要性有一定的随机性，正负值代表随机性变化。可以看出从上到下特征重要度依次递减，后面出现了负值，表示混排的预测碰巧比真实数据更加准确，说明该特征不是那么重要（这种情况在样本较小时更容易出现）。</p>
+<p>在我们的示例中，对球员赢得全场最佳球员最重要的特征是进球，这也符合我们的直觉。</p>
+<h2 id="部分依赖图"><a href="#部分依赖图" class="headerlink" title="部分依赖图"></a>部分依赖图</h2><p>部分依赖图是用来展示一个特征是怎样影响模型预测的。可以用部分依赖图解答如下问题：</p>
+<ol>
+<li>假如其他特征不变，经纬度对房价有何影响？</li>
+<li>两组人群的健康情况的不同是饮食差异还是其他因素导致的？</li>
+</ol>
+<p>如果您熟悉线性或逻辑回归模型，则部分依赖图可以使用模型的系数来解释。但是，复杂模型的部分依赖图可以捕获比简单模型系数更复杂的模式。</p>
+<h5 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h5><p>部分依赖图也是在训练好模型之后使用的。我们从中选择一个球员数据进行说明，例如：球员占全队50%的持球时长、传球过100次、射门10次并进球1次。</p>
+<ol>
+<li>得到训练好的模型，并预测该球员赢得全场最佳球员的概率。</li>
+<li>选择一个特征，变换该特征数值。例如：将进球数特征分别设置为1、2、3次。</li>
+<li>画出预测概率随着进球数变化的走势图。</li>
+</ol>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> train_test_split
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword">import</span> RandomForestClassifier
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>tree <span class="token keyword">import</span> DecisionTreeClassifier
+<span class="token keyword">from</span> pdpbox <span class="token keyword">import</span> pdp<span class="token punctuation">,</span> get_dataset<span class="token punctuation">,</span> info_plots
+
+data <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'./input/FIFA 2018 Statistics.csv'</span><span class="token punctuation">)</span>
+y <span class="token operator">=</span> <span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token string">'Man of the Match'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"Yes"</span><span class="token punctuation">)</span>
+
+feature_names <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> data<span class="token punctuation">.</span>columns <span class="token keyword">if</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>dtype <span class="token keyword">in</span> <span class="token punctuation">[</span>np<span class="token punctuation">.</span>int64<span class="token punctuation">]</span><span class="token punctuation">]</span>
+X <span class="token operator">=</span> data<span class="token punctuation">[</span>feature_names<span class="token punctuation">]</span>
+train_X<span class="token punctuation">,</span> val_X<span class="token punctuation">,</span> train_y<span class="token punctuation">,</span> val_y <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+tree_model <span class="token operator">=</span> DecisionTreeClassifier<span class="token punctuation">(</span>max_depth<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> min_samples_split<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span>
+                                  random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit<span class="token punctuation">(</span>train_X<span class="token punctuation">,</span> train_y<span class="token punctuation">)</span>
+
+pdp_goals <span class="token operator">=</span> pdp<span class="token punctuation">.</span>pdp_isolate<span class="token punctuation">(</span>model<span class="token operator">=</span>tree_model<span class="token punctuation">,</span> dataset<span class="token operator">=</span>val_X<span class="token punctuation">,</span> model_features<span class="token operator">=</span>feature_names<span class="token punctuation">,</span> feature<span class="token operator">=</span><span class="token string">'Goal Scored'</span><span class="token punctuation">)</span>
+pdp<span class="token punctuation">.</span>pdp_plot<span class="token punctuation">(</span>pdp_goals<span class="token punctuation">,</span> <span class="token string">'Goal Scored'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/7.png" alt="7"></p>
+<p>解释：</p>
+<ul>
+<li>y轴表示相较于基准预测的增加值</li>
+<li>蓝色区域表示置信区间</li>
+<li>有图可知，随着进球数增多，球员赢得全场最佳球员的概率增加，增加到一定程度后收敛。</li>
+</ul>
+<h5 id="探究模型复杂度对部分依赖图的影响"><a href="#探究模型复杂度对部分依赖图的影响" class="headerlink" title="探究模型复杂度对部分依赖图的影响"></a>探究模型复杂度对部分依赖图的影响</h5><p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/7.png" alt="7"></p>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/8.png" alt="8"></p>
+<p>对比显示，玩家跑100公里，更有可能赢得全场最佳球员，更多的距离，会降低预测值。通常，随机森林曲线更高的平滑度要比决策树曲线更加合理。</p>
+<h5 id="2D部分依赖图"><a href="#2D部分依赖图" class="headerlink" title="2D部分依赖图"></a>2D部分依赖图</h5><p>通过组合特征可得到任意组合下的预测。</p>
+<pre class=" language-python"><code class="language-python">features_to_plot <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'Goal Scored'</span><span class="token punctuation">,</span> <span class="token string">'Distance Covered (Kms)'</span><span class="token punctuation">]</span>
+inter1  <span class="token operator">=</span>  pdp<span class="token punctuation">.</span>pdp_interact<span class="token punctuation">(</span>model<span class="token operator">=</span>tree_model<span class="token punctuation">,</span> dataset<span class="token operator">=</span>val_X<span class="token punctuation">,</span> model_features<span class="token operator">=</span>feature_names<span class="token punctuation">,</span> features<span class="token operator">=</span>features_to_plot<span class="token punctuation">)</span>
+
+pdp<span class="token punctuation">.</span>pdp_interact_plot<span class="token punctuation">(</span>pdp_interact_out<span class="token operator">=</span>inter1<span class="token punctuation">,</span> feature_names<span class="token operator">=</span>features_to_plot<span class="token punctuation">,</span> plot_type<span class="token operator">=</span><span class="token string">'contour'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/9.png" alt="9"></p>
+<p>从上图可以看到，当大于一个进球且总距离接近100km时，我们得到的预测更高。若进球数为0，则覆盖范围就显得无关紧要了。</p>
+<h6 id="SHAP-Values"><a href="#SHAP-Values" class="headerlink" title="SHAP Values"></a>SHAP Values</h6><p>SHAP（Shapley Additive explanation）用来细分每个特征对预测结果的影响。</p>
+<h5 id="SHAP"><a href="#SHAP" class="headerlink" title="SHAP"></a>SHAP</h5><p>Shaply值由美国洛杉矶加州大学罗伊德·夏普利（Lloyd Shapley）提出，用来解决合作博弈贡献和收益分配问题。N个人的合作中，单个成员的贡献不同，收益分配不同。理想的分配方式：贡献==收益。Shapey值是某参与者参与一个合作项目，其所有可能贡献情况的加权，求和取平均的过程。</p>
+<p>贡献和收益如何量化呢？</p>
+<p>Shapley值就是一种方法。<br><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/3.png" alt="3"></p>
+<p>这里简要说明一下shape运行逻辑。</p>
+<p>我们有一个黑盒模型m，有一条样本x，由a,b,c三个特征组成。我们应该如何获取a在最终预测中的贡献度呢？特征贡献最直观的做法是看某个特征在与不在对预测结果的影响，但是这有一个问题，特征受多重共线性的影响，若c先于a引入且c和a作用相似，则a的贡献可能被低估。所以，我们采用另一种计算方式：</p>
+<p>看特征在不同阶段的边际贡献。有a、b、c三个特征，计算a特征贡献是要分别计算a作为第一个、第二个、第三个特征引入的边际贡献是多少。其中a代表引入，$a’$代表缺失。</p>
+<ol>
+<li>作为第一个特征引入，$边际贡献 = m(a,b’,c’) - m(a’,b’,c’)$。</li>
+<li>作为第二个特征引入，$\frac{(m(a, b, c’) - m(a’, b, c’)) + (m(a, b’, c) - m(a’, b’, c))}{2}$</li>
+<li>作为第三个特征引入，$m(a, b, c) - m(a’, b, c)$</li>
+<li>然后把三种情况加和，然后乘以1/3，得到特征a的总体贡献。</li>
+</ol>
+<p>以足球为例，意图预测一名球员赢得“最佳球员”的概率。SHAP values解释了不同特征值对预测结果的影响。我们可以问：</p>
+<p>球队打入3个球对预测的影响有多大？可以使用如下等式分解预测：</p>
+<p>sum(SHAP values for all features) = pred_for_team - pred_for_baseline_values</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> train_test_split
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword">import</span> RandomForestClassifier
+
+data <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'./input/FIFA 2018 Statistics.csv'</span><span class="token punctuation">)</span>
+y <span class="token operator">=</span> <span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token string">'Man of the Match'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"Yes"</span><span class="token punctuation">)</span> 
+feature_names <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> data<span class="token punctuation">.</span>columns <span class="token keyword">if</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>dtype <span class="token keyword">in</span> <span class="token punctuation">[</span>np<span class="token punctuation">.</span>int64<span class="token punctuation">,</span> np<span class="token punctuation">.</span>int64<span class="token punctuation">]</span><span class="token punctuation">]</span>
+X <span class="token operator">=</span> data<span class="token punctuation">[</span>feature_names<span class="token punctuation">]</span>
+train_X<span class="token punctuation">,</span> val_X<span class="token punctuation">,</span> train_y<span class="token punctuation">,</span> val_y <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+rf_model <span class="token operator">=</span> RandomForestClassifier<span class="token punctuation">(</span>random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit<span class="token punctuation">(</span>train_X<span class="token punctuation">,</span> train_y<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># 第5行数据</span>
+row_to_show <span class="token operator">=</span> <span class="token number">5</span>
+data_for_prediction <span class="token operator">=</span> val_X<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span>row_to_show<span class="token punctuation">]</span>  <span class="token comment" spellcheck="true"># use 1 row of data here. Could use multiple rows if desired</span>
+data_for_prediction_array <span class="token operator">=</span> data_for_prediction<span class="token punctuation">.</span>values<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+rf_model<span class="token punctuation">.</span>predict_proba<span class="token punctuation">(</span>data_for_prediction_array<span class="token punctuation">)</span>
+</code></pre>
+<p>球队有70%的概率赢得该选项。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> shap  <span class="token comment" spellcheck="true"># package used to calculate Shap values</span>
+
+<span class="token comment" spellcheck="true"># Create object that can calculate shap values</span>
+explainer <span class="token operator">=</span> shap<span class="token punctuation">.</span>TreeExplainer<span class="token punctuation">(</span>rf_model<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Calculate Shap values</span>
+shap_values <span class="token operator">=</span> explainer<span class="token punctuation">.</span>shap_values<span class="token punctuation">(</span>data_for_prediction<span class="token punctuation">)</span>
+
+shap<span class="token punctuation">.</span>initjs<span class="token punctuation">(</span><span class="token punctuation">)</span>
+shap<span class="token punctuation">.</span>force_plot<span class="token punctuation">(</span>explainer<span class="token punctuation">.</span>expected_value<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> shap_values<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data_for_prediction<span class="token punctuation">)</span>
+</code></pre>
+<p>shap_values对象是两个数组的列表。第一个数组是负面结果的SHAP值（不赢的奖励），第二个数组是正面结果的值（赢得奖励）。shap包可以可视化结果。</p>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/10.png" alt="10"></p>
+<p>我们预测是0.7，base_value为0.5013，导致预测值增加的特征用粉红色表示，其长度代表特征效果大小，降低预测值的特征显示为蓝色。从图中可以看出，最大的影响来自：目标得分2，控球比对结果有负向的影响。</p>
+<h2 id="SHAP-Values的高级用法"><a href="#SHAP-Values的高级用法" class="headerlink" title="SHAP Values的高级用法"></a>SHAP Values的高级用法</h2><p>现在，我们将聚合snap值来完成替代特征重要性和偏相关图的方法。</p>
+<p>SHAP Values可以用来显示给定特征对预测值有多大影响。之前我们曾显示了单条样本的各种特征对预测结果的影响。</p>
+<h5 id="摘要图"><a href="#摘要图" class="headerlink" title="摘要图"></a>摘要图</h5><p>特征重要度很重要，因为它可以度量哪些特征对模型更加重要。有助于我们轻松低在各个特征之间进行比较，然后将结果图展示给非技术人员。但是，这并不能告诉我们每个功能的重要性。若一个特征具有中等的重要程度，则可能意味着它对于一些预测有很大影响，但总体上没有影响，或者是对所有预测都起中等影响。SHAP摘要图可以可视化各个特征重要性及驱动因素。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> shap
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> train_test_split
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword">import</span> RandomForestClassifier
+
+data <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'./input/FIFA 2018 Statistics.csv'</span><span class="token punctuation">)</span>
+y <span class="token operator">=</span> <span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token string">'Man of the Match'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"Yes"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># Convert from string "Yes"/"No" to binary</span>
+feature_names <span class="token operator">=</span> <span class="token punctuation">[</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> data<span class="token punctuation">.</span>columns <span class="token keyword">if</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>dtype <span class="token keyword">in</span> <span class="token punctuation">[</span>np<span class="token punctuation">.</span>int64<span class="token punctuation">,</span> np<span class="token punctuation">.</span>int64<span class="token punctuation">]</span><span class="token punctuation">]</span>
+X <span class="token operator">=</span> data<span class="token punctuation">[</span>feature_names<span class="token punctuation">]</span>
+train_X<span class="token punctuation">,</span> val_X<span class="token punctuation">,</span> train_y<span class="token punctuation">,</span> val_y <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+rf_model <span class="token operator">=</span> RandomForestClassifier<span class="token punctuation">(</span>random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fit<span class="token punctuation">(</span>train_X<span class="token punctuation">,</span> train_y<span class="token punctuation">)</span>
+
+
+<span class="token comment" spellcheck="true"># Create object that can calculate shap values</span>
+explainer <span class="token operator">=</span> shap<span class="token punctuation">.</span>TreeExplainer<span class="token punctuation">(</span>rf_model<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># calculate shap values. This is what we will plot.</span>
+<span class="token comment" spellcheck="true"># Calculate shap_values for all of val_X rather than a single row, to have more data for plot.</span>
+shap_values <span class="token operator">=</span> explainer<span class="token punctuation">.</span>shap_values<span class="token punctuation">(</span>val_X<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Make plot. Index of [1] is explained in text below.</span>
+shap<span class="token punctuation">.</span>summary_plot<span class="token punctuation">(</span>shap_values<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> val_X<span class="token punctuation">)</span>
+</code></pre>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/11.png" alt="11"></p>
+<p>该图由许多点组成。</p>
+<ul>
+<li>垂直位置显示描述的特征</li>
+<li>点的颜色显示该行特征是高是低。</li>
+<li>水平位置显示该特征值的影响会导致更高还是更低的预测。</li>
+</ul>
+<p>例如，左上角的点是球队进球很少，将预测值降低了0.25。Red和Yellow &amp; Red特征重要性较低。通常，黄色不会影响预测，但在极端情况下，较高的值得到较低的预测。</p>
+<p>注意：计算SHAP可能很慢，需要注意数据集的大小。但是使用xgboost模型时，由于该模型对SHAP进行了优化，速度会更快。</p>
+<h5 id="SHAP依赖性贡献图"><a href="#SHAP依赖性贡献图" class="headerlink" title="SHAP依赖性贡献图"></a>SHAP依赖性贡献图</h5><p>先前，我们使用部分依赖图来显示单个特征如何影响预测。但同时也有一些问题没有显现出来。比如，效果分布是什么？某个特征值效果是否恒定，是否取决于其他特征值相差很大？SHAP依赖性贡献图提供了与PDP类似的见解，但增加了更多的细节。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> shap  <span class="token comment" spellcheck="true"># package used to calculate Shap values</span>
+
+<span class="token comment" spellcheck="true"># Create object that can calculate shap values</span>
+explainer <span class="token operator">=</span> shap<span class="token punctuation">.</span>TreeExplainer<span class="token punctuation">(</span>rf_model<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># calculate shap values. This is what we will plot.</span>
+shap_values <span class="token operator">=</span> explainer<span class="token punctuation">.</span>shap_values<span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># make plot.</span>
+shap<span class="token punctuation">.</span>dependence_plot<span class="token punctuation">(</span><span class="token string">'Ball Possession %'</span><span class="token punctuation">,</span> shap_values<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> X<span class="token punctuation">,</span> interaction_index<span class="token operator">=</span><span class="token string">"Goal Scored"</span><span class="token punctuation">)</span>
+</code></pre>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/12.png" alt="12"></p>
+<p>这种向上的趋势表明占有的球权(Ball Possession)越多，对预测为赢的贡献就越高。</p>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/4.png" alt="4"></p>
+<p>但是，从上图又可以看出，Ball Possession必须与其他特征相互作用。例如：我们突出圈出两个相似球权值得点，却一个导致预测增加，一个导致预测减少。</p>
+<p><img src="/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/5.png" alt="5"></p>
+<p>这两个点脱颖而出，与上升趋势相去甚远。表明，拥有球会增加球队赢得奖项的机会（拥有球权和SHAP VALUES正相关），但如果大量球权却只进了一个球，情况就会逆转，变得不利于赢的最佳球员。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">指尖旋律</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://puhaoran.github.io/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/">https://puhaoran.github.io/2021/04/08/ji-qi-xue-xi-de-ke-jie-shi-xing/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">指尖旋律</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">可解释性机器学习</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/04/13/time-series-clustering-of-online-gambling-activities-for-addicted-users-detection-fan-yi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="《Time Series Clustering of Online Gambling Activities for Addicted Users’ Detection》翻译">
+                        
+                        <span class="card-title">《Time Series Clustering of Online Gambling Activities for Addicted Users’ Detection》翻译</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-13
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%81%9A%E7%B1%BB/" class="post-category">
+                                    聚类
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%81%9A%E7%B1%BB/">
+                        <span class="chip bg-color">聚类</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90/">
+                        <span class="chip bg-color">用户行为分析</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/04/08/ge-ren-ji-hua-biao/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="个人计划表">
+                        
+                        <span class="card-title">个人计划表</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" class="post-category">
+                                    人生感悟
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/">
+                        <span class="chip bg-color">人生感悟</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2021</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">指尖旋律</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:1466989448@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1466989448" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1466989448" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
