@@ -304,6 +304,31 @@
     
     
     <entry>
+      <title>剑指 Offer 57. 和为s的两个数字</title>
+      <link href="2021/03/29/jian-zhi-offer-57.he-wei-s-de-liang-ge-shu-zi/"/>
+      <url>2021/03/29/jian-zhi-offer-57.he-wei-s-de-liang-ge-shu-zi/</url>
+      
+        <content type="html"><![CDATA[<p>剑指 Offer 57. 和为s的两个数字<br>输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。如果有多对数字的和等于s，则输出任意一对即可。</p><p>示例 1：<br>输入：nums = [2,7,11,15], target = 9<br>输出：[2,7] 或者 [7,2]<br>示例 2：</p><p>输入：nums = [10,26,30,31,47,60], target = 40<br>输出：[10,30] 或者 [30,10]</p><h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>前后双指针。前后两个指针分别指向第一个和最后一个元素，若二者和等于target则输出结果，若小于target则i++，若大于target则j–。</p><pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">twoSum</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">:</span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">,</span> target<span class="token punctuation">:</span> int<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">:</span>        res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>        i<span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span>        <span class="token keyword">while</span> i <span class="token operator">&lt;</span> j<span class="token punctuation">:</span>            <span class="token keyword">if</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">:</span>                res <span class="token operator">=</span> <span class="token punctuation">[</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">]</span>                <span class="token keyword">break</span>            <span class="token keyword">elif</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">:</span>                j <span class="token operator">-=</span> <span class="token number">1</span>            <span class="token keyword">else</span><span class="token punctuation">:</span>                i <span class="token operator">+=</span> <span class="token number">1</span>        <span class="token keyword">return</span> res</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 剑指Offer </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 剑指Offer </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>深度强化学习实战之价值学习</title>
       <link href="2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/"/>
       <url>2021/03/29/shen-du-qiang-hua-xue-xi-shi-zhan-zhi-jie-zhi-xue-xi/</url>
