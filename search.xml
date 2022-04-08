@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>剑指 Offer 10- I. 斐波那契数列</title>
+      <link href="2022/04/07/jian-zhi-offer-10-i.fei-bo-na-qi-shu-lie/"/>
+      <url>2022/04/07/jian-zhi-offer-10-i.fei-bo-na-qi-shu-lie/</url>
+      
+        <content type="html"><![CDATA[<p>剑指 Offer 10- I. 斐波那契数列<br>写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。斐波那契数列的定义如下：</p><p>F(0) = 0,   F(1) = 1<br>F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.<br>斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。</p><p>答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。</p><p>示例 1：<br>输入：n = 2<br>输出：1<br>示例 2：</p><p>输入：n = 5<br>输出：5</p><h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>DP<br>①状态表达。f(i)为前f(i-1)和f(i-2)之和。<br>②状态转移。f(n) = f(n-1)+f(n-2)。</p><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># 方法一：递归</span><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">fib</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> n<span class="token punctuation">:</span> int<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> int<span class="token punctuation">:</span>        <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>            <span class="token keyword">return</span> <span class="token number">0</span>        <span class="token keyword">elif</span> n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>            <span class="token keyword">return</span> <span class="token number">1</span>        <span class="token keyword">else</span><span class="token punctuation">:</span>            <span class="token keyword">return</span> self<span class="token punctuation">.</span>fib<span class="token punctuation">(</span>n<span class="token number">-1</span><span class="token punctuation">)</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>fib<span class="token punctuation">(</span>n<span class="token number">-2</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"># 方法二：递推</span><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">fib</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> n<span class="token punctuation">:</span> int<span class="token punctuation">)</span><span class="token punctuation">:</span>        <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>            <span class="token keyword">return</span> <span class="token number">0</span>        <span class="token keyword">elif</span> n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>            <span class="token keyword">return</span> <span class="token number">1</span>        a<span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span>        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>            t <span class="token operator">=</span> a<span class="token operator">+</span>b            a <span class="token operator">=</span> b            b <span class="token operator">=</span> t        <span class="token keyword">return</span> t <span class="token operator">%</span> <span class="token number">1000000007</span>solution <span class="token operator">=</span> Solution<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token keyword">print</span><span class="token punctuation">(</span>solution<span class="token punctuation">.</span>fib<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 剑指Offer </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 剑指Offer </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>读研</title>
       <link href="2021/04/27/du-yan/"/>
       <url>2021/04/27/du-yan/</url>
