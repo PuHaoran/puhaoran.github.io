@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="剑指 Offer 48. 最长不含重复字符的子字符串, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="keywords" content="剑指 Offer 05. 替换空格, 算法策略，深度思考，深度学习，个人成长">
     <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>剑指 Offer 48. 最长不含重复字符的子字符串 | 深度实验室</title>
+    <title>剑指 Offer 05. 替换空格 | 深度实验室</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -253,12 +253,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">剑指 Offer 48. 最长不含重复字符的子字符串</h1>
+                    <h1 class="description center-align post-title">剑指 Offer 05. 替换空格</h1>
                 </div>
             </div>
         </div>
@@ -420,29 +420,29 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>剑指 Offer 48. 最长不含重复字符的子字符串<br>请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。</p>
-<p>示例 1:</p>
-<p>输入: “abcabcbb”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “abc”，所以其长度为 3。<br>示例 2:</p>
-<p>输入: “bbbbb”<br>输出: 1<br>解释: 因为无重复字符的最长子串是 “b”，所以其长度为 1。<br>示例 3:</p>
-<p>输入: “pwwkew”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “wke”，所以其长度为 3。<br>     请注意，你的答案必须是 子串 的长度，”pwke” 是一个子序列，不是子串。</p>
-<h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>遍历数组，设置一个双向队列存储无重复子串，当前元素不在队列中则直接加入队列，当前元素若已在队列中则从左边弹出元素直至队列中不再存在当前元素。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> collections
-
-
-<span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">lengthOfLongestSubstring</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s<span class="token punctuation">:</span> str<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> int<span class="token punctuation">:</span>
-        q <span class="token operator">=</span> collections<span class="token punctuation">.</span>deque<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <p>剑指 Offer 05. 替换空格<br>请实现一个函数，把字符串 s 中的每个空格替换成”%20”。</p>
+<p>示例 1：<br>输入：s = “We are happy.”<br>输出：”We%20are%20happy.”</p>
+<h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>先利用空格数量开辟空间，然后根据双指针所指的元素从后向前进行替换操作。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">replaceSpace</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s<span class="token punctuation">:</span> str<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> str<span class="token punctuation">:</span>
         s <span class="token operator">=</span> list<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-        res <span class="token operator">=</span> <span class="token number">0</span>
+        cnt <span class="token operator">=</span> <span class="token number">0</span>
         <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            <span class="token keyword">if</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">in</span> q<span class="token punctuation">:</span>
-                <span class="token keyword">while</span> <span class="token number">1</span><span class="token punctuation">:</span>
-                    t <span class="token operator">=</span> q<span class="token punctuation">.</span>popleft<span class="token punctuation">(</span><span class="token punctuation">)</span>
-                    <span class="token keyword">if</span> t <span class="token operator">==</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
-                        <span class="token keyword">break</span>
-            q<span class="token punctuation">.</span>append<span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            res <span class="token operator">=</span> max<span class="token punctuation">(</span>res<span class="token punctuation">,</span> len<span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> res
+            <span class="token keyword">if</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">:</span>
+                cnt <span class="token operator">+=</span> <span class="token number">1</span>
+        i<span class="token punctuation">,</span> j <span class="token operator">=</span> len<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token operator">+</span>cnt<span class="token operator">*</span><span class="token number">2</span><span class="token operator">-</span><span class="token number">1</span>
+        s <span class="token operator">+=</span> <span class="token punctuation">[</span><span class="token string">''</span><span class="token punctuation">]</span><span class="token operator">*</span>cnt<span class="token operator">*</span><span class="token number">2</span>
+        <span class="token keyword">while</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">:</span>
+                s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'0'</span>
+                s<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'2'</span>
+                s<span class="token punctuation">[</span>j<span class="token number">-2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'%'</span>
+                j <span class="token operator">-=</span> <span class="token number">3</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                j <span class="token operator">-=</span> <span class="token number">1</span>
+            i <span class="token operator">-=</span> <span class="token number">1</span>
+        <span class="token keyword">return</span> <span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
 </code></pre>
 
                 
@@ -470,7 +470,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://puhaoran.github.io/2022/04/12/jian-zhi-offer-48.zui-chang-bu-han-chong-fu-zi-fu-de-zi-zi-fu-chuan/">https://puhaoran.github.io/2022/04/12/jian-zhi-offer-48.zui-chang-bu-han-chong-fu-zi-fu-de-zi-zi-fu-chuan/</a>
+                    <a href="https://puhaoran.github.io/2022/04/12/jian-zhi-offer-05.ti-huan-kong-ge/">https://puhaoran.github.io/2022/04/12/jian-zhi-offer-05.ti-huan-kong-ge/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -685,13 +685,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/12/jian-zhi-offer-06.cong-wei-dao-tou-da-yin-lian-biao/">
+                <a href="/2022/04/12/jian-zhi-offer-24.fan-zhuan-lian-biao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="剑指 Offer 06. 从尾到头打印链表">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="剑指 Offer 24. 反转链表">
                         
-                        <span class="card-title">剑指 Offer 06. 从尾到头打印链表</span>
+                        <span class="card-title">剑指 Offer 24. 反转链表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -734,13 +734,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/12/jian-zhi-offer-49.chou-shu/">
+                <a href="/2022/04/12/jian-zhi-offer-06.cong-wei-dao-tou-da-yin-lian-biao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="剑指 Offer 49. 丑数">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="剑指 Offer 06. 从尾到头打印链表">
                         
-                        <span class="card-title">剑指 Offer 49. 丑数</span>
+                        <span class="card-title">剑指 Offer 06. 从尾到头打印链表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

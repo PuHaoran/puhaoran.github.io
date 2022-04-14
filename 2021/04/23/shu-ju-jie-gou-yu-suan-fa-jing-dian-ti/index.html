@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="剑指 Offer 48. 最长不含重复字符的子字符串, 算法策略，深度思考，深度学习，个人成长">
+    <meta name="keywords" content="数据结构与算法经典题, 算法策略，深度思考，深度学习，个人成长">
     <meta name="description" content="深度实验室，小而美的个人站点。读书|学习|算法|思考|个人成长">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>剑指 Offer 48. 最长不含重复字符的子字符串 | 深度实验室</title>
+    <title>数据结构与算法经典题 | 深度实验室</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -253,12 +253,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">剑指 Offer 48. 最长不含重复字符的子字符串</h1>
+                    <h1 class="description center-align post-title">数据结构与算法经典题</h1>
                 </div>
             </div>
         </div>
@@ -399,7 +399,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-12
+                    2021-04-23
                 </div>
                 
 
@@ -420,30 +420,38 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>剑指 Offer 48. 最长不含重复字符的子字符串<br>请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。</p>
-<p>示例 1:</p>
-<p>输入: “abcabcbb”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “abc”，所以其长度为 3。<br>示例 2:</p>
-<p>输入: “bbbbb”<br>输出: 1<br>解释: 因为无重复字符的最长子串是 “b”，所以其长度为 1。<br>示例 3:</p>
-<p>输入: “pwwkew”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “wke”，所以其长度为 3。<br>     请注意，你的答案必须是 子串 的长度，”pwke” 是一个子序列，不是子串。</p>
-<h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>遍历数组，设置一个双向队列存储无重复子串，当前元素不在队列中则直接加入队列，当前元素若已在队列中则从左边弹出元素直至队列中不再存在当前元素。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> collections
-
-
-<span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">lengthOfLongestSubstring</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s<span class="token punctuation">:</span> str<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> int<span class="token punctuation">:</span>
-        q <span class="token operator">=</span> collections<span class="token punctuation">.</span>deque<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        s <span class="token operator">=</span> list<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-        res <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            <span class="token keyword">if</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">in</span> q<span class="token punctuation">:</span>
-                <span class="token keyword">while</span> <span class="token number">1</span><span class="token punctuation">:</span>
-                    t <span class="token operator">=</span> q<span class="token punctuation">.</span>popleft<span class="token punctuation">(</span><span class="token punctuation">)</span>
-                    <span class="token keyword">if</span> t <span class="token operator">==</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
-                        <span class="token keyword">break</span>
-            q<span class="token punctuation">.</span>append<span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            res <span class="token operator">=</span> max<span class="token punctuation">(</span>res<span class="token punctuation">,</span> len<span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> res
-</code></pre>
+                <h2 id="1-基础算法"><a href="#1-基础算法" class="headerlink" title="1. 基础算法"></a>1. 基础算法</h2><h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><table>
+<thead>
+<tr>
+<th align="center">Alg</th>
+<th align="center">思想</th>
+<th align="center">时间复杂度</th>
+<th align="center">-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>剑指 Offer 05. 替换空格</strong></td>
+<td align="center">双指针。先利用空格数量开辟空间，然后根据双指针所指的元素从后向前进行替换操作。</td>
+<td align="center">$O(n)$</td>
+<td align="center">-</td>
+</tr>
+</tbody></table>
+<h5 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h5><table>
+<thead>
+<tr>
+<th align="center">Alg</th>
+<th align="center">思想</th>
+<th align="center">时间复杂度</th>
+<th align="center">-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>剑指 Offer 06. 从尾到头打印链表</strong></td>
+<td align="center">递归。先访问每一个节点，然后将节点添加到结果数组中。</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+</tbody></table>
 
                 
             </div>
@@ -470,7 +478,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://puhaoran.github.io/2022/04/12/jian-zhi-offer-48.zui-chang-bu-han-chong-fu-zi-fu-de-zi-zi-fu-chuan/">https://puhaoran.github.io/2022/04/12/jian-zhi-offer-48.zui-chang-bu-han-chong-fu-zi-fu-de-zi-zi-fu-chuan/</a>
+                    <a href="https://puhaoran.github.io/2021/04/23/shu-ju-jie-gou-yu-suan-fa-jing-dian-ti/">https://puhaoran.github.io/2021/04/23/shu-ju-jie-gou-yu-suan-fa-jing-dian-ti/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -685,13 +693,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/12/jian-zhi-offer-06.cong-wei-dao-tou-da-yin-lian-biao/">
+                <a href="/2021/04/27/du-yan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="剑指 Offer 06. 从尾到头打印链表">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="读研">
                         
-                        <span class="card-title">剑指 Offer 06. 从尾到头打印链表</span>
+                        <span class="card-title">读研</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -702,14 +710,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-27
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%89%91%E6%8C%87Offer/" class="post-category">
-                                    剑指Offer
+                            <a href="/categories/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" class="post-category">
+                                    人生感悟
                                 </a>
                             
                             
@@ -719,8 +727,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%89%91%E6%8C%87Offer/">
-                        <span class="chip bg-color">剑指Offer</span>
+                    <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/">
+                        <span class="chip bg-color">人生感悟</span>
                     </a>
                     
                 </div>
@@ -734,13 +742,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/12/jian-zhi-offer-49.chou-shu/">
+                <a href="/2021/04/23/chuan-tong-ji-qi-xue-xi-mo-xing-de-ke-jie-shi-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="剑指 Offer 49. 丑数">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="传统机器学习模型的可解释性">
                         
-                        <span class="card-title">剑指 Offer 49. 丑数</span>
+                        <span class="card-title">传统机器学习模型的可解释性</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -751,14 +759,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-23
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%89%91%E6%8C%87Offer/" class="post-category">
-                                    剑指Offer
+                            <a href="/categories/%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    可解释性机器学习
                                 </a>
                             
                             
@@ -768,8 +776,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%89%91%E6%8C%87Offer/">
-                        <span class="chip bg-color">剑指Offer</span>
+                    <a href="/tags/%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">可解释性机器学习</span>
                     </a>
                     
                 </div>
