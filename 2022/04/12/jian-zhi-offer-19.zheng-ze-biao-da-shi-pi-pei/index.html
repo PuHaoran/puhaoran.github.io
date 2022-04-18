@@ -426,15 +426,15 @@
 <p>输入:<br>s = “aa”<br>p = “a*”<br>输出: true<br>解释: 因为 ‘*’ 代表可以匹配零个或多个前面的那一个元素, 在这里前面的元素就是 ‘a’。因此，字符串 “aa” 可被视为 ‘a’ 重复了一次。</p>
 <h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>①状态表示。f(i,j)，f(i,j)是s和p是否存在一个合法方案。</p>
 <p>②状态转移。s和p为两个串,f为状态转移方程，则</p>
-<pre><code>s---------------
+<pre class=" language-公式"><code class="language-公式">s---------------
                i
 p-------------
              j
-1. p[j] not '*' and i, f(i,j)=(s[i]==p[j]||p[j]=='.')&amp;&amp;f(i-1,j-1)
-2. p[j] == '*', f(i,j)=f(i,j-2)||(f(i-1,j-2)&amp;&amp;s[i]==p[j-1])||(f(i-2,j-2)&amp;&amp;s[i]==p[j-1]&amp;&amp;s[i-1]==p[j-1]) ①
-               f(i-1,j)=f(i-1,j-2)||(f(i-2,j-2)&amp;&amp;s[i-1]==p[j-1])||(f(i-3,j-2)&amp;&amp;s[i-1]==p[j-1]&amp;&amp;s[i-2]==p[j-1]) ②
-=&gt;
-f(i,j)=f(i,j-2)||(f(i-1,j)&amp;&amp;(s[i]==p[j-1]||p[j-1]=='.'))
+1. p[j] not '*' and i, f(i,j)=(s[i]==p[j]||p[j]=='.')&&f(i-1,j-1)
+2. p[j] == '*', f(i,j)=f(i,j-2)||(f(i-1,j-2)&&s[i]==p[j-1])||(f(i-2,j-2)&&s[i]==p[j-1]&&s[i-1]==p[j-1]) ①
+               f(i-1,j)=f(i-1,j-2)||(f(i-2,j-2)&&s[i-1]==p[j-1])||(f(i-3,j-2)&&s[i-1]==p[j-1]&&s[i-2]==p[j-1]) ②
+=>
+f(i,j)=f(i,j-2)||(f(i-1,j)&&(s[i]==p[j-1]||p[j-1]=='.'))
 </code></pre>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
     <span class="token keyword">def</span> <span class="token function">isMatch</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s<span class="token punctuation">:</span> str<span class="token punctuation">,</span> p<span class="token punctuation">:</span> str<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> bool<span class="token punctuation">:</span>
