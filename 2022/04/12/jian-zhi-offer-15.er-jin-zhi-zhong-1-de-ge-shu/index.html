@@ -423,7 +423,7 @@
                 <p>剑指 Offer 15. 二进制中1的个数<br>编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为 汉明重量).）。</p>
 <p>示例 1：</p>
 <p>输入：n = 11 (控制台输入 00000000000000000000000000001011)<br>输出：3<br>解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 ‘1’。</p>
-<h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>求n的第k位数字，k &amp; 1。</p>
+<h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><p>求n二进制最后一位数字，n &amp; 1。</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
     <span class="token keyword">def</span> <span class="token function">hammingWeight</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> n<span class="token punctuation">:</span> int<span class="token punctuation">)</span><span class="token punctuation">:</span>
         res <span class="token operator">=</span> <span class="token number">0</span>

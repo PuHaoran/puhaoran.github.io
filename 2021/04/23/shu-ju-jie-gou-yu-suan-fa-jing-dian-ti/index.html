@@ -420,7 +420,50 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-基础算法"><a href="#1-基础算法" class="headerlink" title="1. 基础算法"></a>1. 基础算法</h2><h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><table>
+                <h2 id="1-基础算法"><a href="#1-基础算法" class="headerlink" title="1. 基础算法"></a>1. 基础算法</h2><h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><pre class=" language-伪代码"><code class="language-伪代码">// 快排模版
+def quick_sort(l, r):
+    if l >= r:
+        return
+    i, j = l-1, r+1
+    x = nums[l]
+    while i < j:
+        while 1:
+            i += 1
+            if nums[i] >= x:
+                break
+        while 1:
+            j -= 1
+            if nums[j] <= x:
+                break
+        if i < j:
+            nums[i], nums[j] = nums[j], nums[i]
+    quick_sort(l, j)
+    quick_sort(j+1, r)
+    
+// 归并排序模版
+def merge_sort(l, r):
+    if l >= r:
+        return
+    mid = (l+r) // 2
+    i, j, k = l, mid+1, 0
+    merge_sort(l, mid)
+    merge_sort(mid+1, r)
+    temp = []
+    while i <= mid and j <= r:
+        if arr[i] <= arr[j]:
+            temp.append(arr[i])
+            i += 1
+        else:
+            temp.append(arr[j])
+            j += 1
+    if i <= mid:
+        temp += arr[i:mid+1]
+    if j <= r:
+        temp += arr[j:r+1]
+    for i in range(len(temp)):
+        arr[l+i] = temp[i]
+</code></pre>
+<table>
 <thead>
 <tr>
 <th align="center">Alg</th>
@@ -442,40 +485,59 @@
 <td align="center">数组</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
+<td align="center"><strong>剑指 Offer 29. 顺时针打印矩阵</strong></td>
+<td align="center">按照右、下、左、上的顺序遍历数组，其中起始位置位于(0,-1)，走下一步之前先进行正确性的判断。</td>
+<td align="center">O(n)</td>
+<td align="center">数组</td>
+</tr>
+</tbody></table>
+<pre><code>| **剑指 Offer 39. 数组中出现次数超过一半的数字** | 先排序，然后通过前后两个双指针去掉任意两个不相等的数据，最后剩下的就是众数。 | O(n) | 数组 |
+</code></pre>
+<p>| <strong>剑指 Offer 45. 把数组排成最小的数</strong> | 快排。两元素比较规则：x + y &lt; y + x =&gt; x &lt; y;y + x &lt; x + y =&gt; y &lt; x。 | O(logn) | 快速排序 |<br>| **剑指 Offer 51. 数组中的逆序对** | 归并排序过程对A、B两个有序数组进行比较，若arr[i]&lt;=arr[j]，则i+=1，若arr[i]&gt;arr[j]，则j+1，此时共mid-i+1个数均大于arr[j]。 | O(logn) | 归并排序 |<br>| <strong>剑指 Offer 61. 扑克牌中的顺子</strong> | 题解一。去掉0之后，判断是否重复，是否最大值-最小值&lt;=4。题解二。统计0的个数，判断是否重复，0的个数是否&gt;=数字间隔之和。 | O(n) | 数组 |<br>| <strong>剑指 Offer 66. 构建乘积数组</strong> | 每一行所有除对角线元素相乘即为乘积数组的元素。先从上到下构建下三角乘积数组，然后从下到上构建上三角乘积数组。 | $O(n^{2})$ | 数组 |</p>
+<h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><table>
+<thead>
+<tr>
+<th align="center">Alg</th>
+<th align="center">思想</th>
+<th align="center">时间复杂度</th>
+<th align="center">Tag</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>剑指 Offer 20. 表示数值的字符串</strong></td>
+<td align="center">去掉两端空格，遍历字符串，判断e、.、符号不满足条件的所有情况。</td>
+<td align="center">O(n)</td>
+<td align="center">字符串</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 43. 1～n 整数中 1 出现的次数</strong></td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">-</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 44. 数字序列中某一位的数字</strong></td>
+<td align="center">找规律，先找到其是几位数，然后再找到对应数字，最后数字的对应位。</td>
+<td align="center">O(1)</td>
+<td align="center">找规律 字符串</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 50. 第一个只出现一次的字符</strong></td>
+<td align="center">遍历数组，字典保存字符是否出现一次，出现一次为True，多次为False；然后遍历字典(python3.6默认有序)，返回第一个出现一次的字符。</td>
+<td align="center">O(n)</td>
+<td align="center">字符串 字典</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 58 - II. 左旋转字符串</strong></td>
+<td align="center">先全部翻转，然后前半部分和后半部分分别翻转。</td>
+<td align="center">O(n)</td>
+<td align="center">字符串</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 67. 把字符串转换成整数</strong></td>
+<td align="center">去掉两边的空字符，然后记录首位的正负号；遍历数组，若字符为符号字符(+/-)且在开头则跳过，若为数字字符则res=res*10+ord(s[i])-48，否则为非法字符则跳出循环。</td>
+<td align="center">O(n)</td>
+<td align="center">字符串</td>
 </tr>
 </tbody></table>
 <h5 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h5><table>
@@ -500,22 +562,16 @@
 <td align="center">快速幂 二分</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 53 - I. 在排序数组中查找数字 I</strong></td>
+<td align="center">二分。找最左端索引和最右端索引，然后二者相减+1即为出现次数；单调数组中找一个区间，本质是找右区间端点和左区间端点。</td>
+<td align="center">O(logn)</td>
+<td align="center">二分</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 53 - II. 0～n-1中缺失的数字</strong></td>
+<td align="center">二分。本质是寻找区间左端点（左边第一个索引与值不相等的索引）。</td>
+<td align="center">O(logn)</td>
+<td align="center">二分</td>
 </tr>
 </tbody></table>
 <h5 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h5><table>
@@ -546,25 +602,53 @@
 <td align="center">链表 双指针</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 24. 反转链表</strong></td>
+<td align="center">p为首节点，q为空节点；遍历p的同时保存p_next=p.next，并将p节点作为q的首节点p.next=q，然后更新p和q。</td>
+<td align="center">O(n)</td>
+<td align="center">链表</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 25. 合并两个排序的链表</strong></td>
+<td align="center">创建一个新链表。从前往后进行遍历链表并判断大小，小的合并到新链表上，最终未遍历完的链表也拼接到新链表。递归。递归返回当前节点或者一串节点，l1.next=merge(l1.next, l2) return l1。</td>
+<td align="center">O(n)</td>
+<td align="center">链表 递归</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 35. 复杂链表的复制</strong></td>
+<td align="center">复制链表各节点在原链表节点后，然后遍历链表根据原链表random节点的下一个节点即为新链表对应的random节点，得到复制链表。</td>
+<td align="center">O(n)</td>
+<td align="center">链表</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 52. 两个链表的第一个公共节点</strong></td>
+<td align="center">A和B在两条不同长度的跑道上跑步，以相同速度，A跑完自己的跑道之后跑B的跑道;B也一样，二者最终一定会在跑道交点或终点相交。</td>
+<td align="center">O(m+n)</td>
+<td align="center">链表</td>
 </tr>
 </tbody></table>
-<h5 id="栈-队列"><a href="#栈-队列" class="headerlink" title="栈/队列"></a>栈/队列</h5><table>
+<h5 id="栈-队列-堆"><a href="#栈-队列-堆" class="headerlink" title="栈/队列/堆"></a>栈/队列/堆</h5><pre class=" language-伪代码"><code class="language-伪代码">// 堆排序模版
+// 建堆。构建1-n数组。
+global n
+arr = arr[1...n]
+n = len(arr)
+// 重构堆。从倒数第一个非叶子节点从后向前down(i)，以递归形式对节点位置进行调整。
+def down(i):
+    t = i
+    if 2*i<=n and arr[2*i] < arr[t]:
+        t = 2*i
+    if 2*i+1<=n and arr[2*i+1] < arr[t]:
+        t = 2*i+1
+    if i != t:
+        arr[i], arr[t] = arr[t], arr[i]
+        down(t)
+for i in range(n//2, 0, -1):
+    down(i)
+// 去掉堆顶元素
+arr[1], arr[n] = arr[n], arr[1]
+n -= 1
+down(1)
+</code></pre>
+<table>
 <thead>
 <tr>
 <th align="center">Alg</th>
@@ -580,34 +664,46 @@
 <td align="center">栈 队列</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 30. 包含min函数的栈</strong></td>
+<td align="center">单调栈。创建普通栈的同时创建一个单调递减的栈；若当前元素入栈元素小于等于栈顶则直接入栈，否则不做处理；若当前元素等于栈顶元素，则出栈；否则，直接入栈。</td>
+<td align="center">O(n)</td>
+<td align="center">单调栈</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 31. 栈的压入、弹出序列</strong></td>
+<td align="center">遍历pushed，将元素逐个入栈，若当前栈顶元素等于popped当前所指元素，则弹出栈顶元素并popped指针进一。</td>
+<td align="center">O(n)</td>
+<td align="center">栈</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 40. 最小的k个数</strong></td>
+<td align="center">一堆排序解法。构建1-n的数组，然后从倒数第一个非叶子节点从后向前遍历，down(i)以递归方式进行节点位置的调整，判断当前节点与孩子节点大小并交换(若交换则按交换的孩子位置继续down)。二快排模版解法。[<em>A</em>][<strong>B</strong>]，若k的个数&lt;=A长度则只递归A（最小的k个值在A区间里），否则只递归B并更新k-=A区间长度（A区间的值都满足最小的k个值，同时有一部分k-A长度个值在B区间里）。</td>
+<td align="center">O(logn)</td>
+<td align="center">堆排序</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 41. 数据流中的中位数</strong></td>
+<td align="center">大/小顶堆。维护A、B两个堆，A保存较小元素，B保存较大元素；A使用大顶堆存储，B使用小顶堆存储。findMedian: A == B，AB各弹出一个求平均；否则，B弹出一个。addNum: A == B，将元素入B，然后弹出一个最小值入A；否则，将元素入A，然后弹出一个最大值入B。</td>
+<td align="center">O(nlogn)</td>
+<td align="center">大顶堆 小顶堆</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 48. 最长不含重复字符的子字符串</strong></td>
+<td align="center">遍历数组，设置一个双向队列存储无重复子串，当前元素不在队列中则直接加入队列，当前元素若已在队列中则从左边弹出元素直至队列中不再存在当前元素。</td>
+<td align="center">O(n)</td>
+<td align="center">队列</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 59 - I. 滑动窗口的最大值</strong></td>
+<td align="center">维持一个单调递减的双端队列，每次遍历时，去掉队列中超出滑动窗口的元素，并保持队列单调递减。</td>
+<td align="center">O(n)</td>
+<td align="center">单调队列</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 59 - II. 队列的最大值</strong></td>
+<td align="center">双端队列。一个队列用于存储原始数据，另外维持一个单调递减的双端队列用于取出最大值。</td>
+<td align="center">O(n)</td>
+<td align="center">单调队列</td>
 </tr>
 </tbody></table>
 <h5 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h5><table>
@@ -638,25 +734,28 @@
 <td align="center">链表 双指针</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 57. 和为s的两个数字</strong></td>
+<td align="center">前后双指针。前后两个指针分别指向第一个和最后一个元素，若二者和等于target则输出结果，若小于target则i++，若大于target则j–。</td>
+<td align="center">O(n)</td>
+<td align="center">双指针</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 57 - II. 和为s的连续正数序列</strong></td>
+<td align="center">一双指针。i、j分别指向数组起始位置，若区间内的元素和等于目标，则i++、j++；若区间内的元素和大于目标，则i++；否则j++。二前缀和解法。找到所有两数相减等于target的区间。</td>
+<td align="center">O(n)</td>
+<td align="center">双指针 前缀和</td>
 </tr>
 </tbody></table>
-<h5 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h5><table>
+<h5 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h5><pre class=" language-伪代码"><code class="language-伪代码">求x的二进制数最低位1的位置lowbit为何可以用x & -x表示？
+计算机采用二进制的补码进行数学运算，其中正数的补码是原码，负数的补码是原码取反+1，故
+7 & -7 =》 000111 & 111001 =》 000001 =》1。
+4 & -4 =》 000100 & 111100 =》 000100 =》4。
+
+n >> k & 1，可以求n的第k位对应的二进制数。
+
+n&(n-1)，可以消除n最低位的1。
+</code></pre>
+<table>
 <thead>
 <tr>
 <th align="center">Alg</th>
@@ -667,30 +766,30 @@
 </thead>
 <tbody><tr>
 <td align="center"><strong>剑指 Offer 15. 二进制中1的个数</strong></td>
-<td align="center">求n的第k位数字，k &amp; 1；消除最低位的1，n&amp;(n-1)。</td>
+<td align="center">求n二进制最后一位数字，n &amp; 1；消除最低位的1，n&amp;(n-1)。</td>
+<td align="center">O(1)</td>
+<td align="center">位运算</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 56 - I. 数组中数字出现的次数</strong></td>
+<td align="center">位运算。先将数组的每个元素逐个进行异或，然后对结果取lowbit（不相等的两个元素可通过与lowbit进行&amp;操作区分）；然后再次遍历数组并根据&amp;的结果进行分组，分组的元素异或后的结果就是目标元素。</td>
+<td align="center">O(n)</td>
+<td align="center">lowbit</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 56 - II. 数组中数字出现的次数 II</strong></td>
+<td align="center">利用n &gt;&gt; k &amp; 1，求n的第k位二进制数。两层循环，外层遍历共31位的二进制数，内层遍历所有元素，所有元素k位求和%3得到多余的数在k位上的数字。</td>
 <td align="center">-</td>
 <td align="center">位运算</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
+<td align="center"><strong>剑指 Offer 64. 求1+2+…+n</strong></td>
+<td align="center">布尔判断作为递归终止条件。</td>
 <td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center">位运算</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
+<td align="center"><strong>剑指 Offer 65. 不用加减乘除做加法</strong></td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">-</td>
@@ -712,38 +811,86 @@
 <td align="center">二叉树</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 26. 树的子结构</strong></td>
+<td align="center">递归。判断B是否是A的子树需要从A的各个节点进行判断，故我们需要二个递归，一个用来比较从根节点开始是否相等，一个用来遍历A的所有节点。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树 递归</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 27. 二叉树的镜像</strong></td>
+<td align="center">前序遍历，针对每个根节点交换其左右叶子节点。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 28. 对称的二叉树</strong></td>
+<td align="center">一、直接运用递归求解，dfs(l, r)，然后判断l的左节点==r的右节点&amp;&amp;l的右节点==r的左节点。二、先对树进行翻转，然后同时对两棵树进行前序遍历，判断翻转后的树与原树是否对称。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 32 - II. 从上到下打印二叉树 II</strong></td>
+<td align="center">BFS。初始化队列 while len(q): t=q.popleft() 扩展t，注意当前队列大小即为当前层的全部元素长度。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树 BFS</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 33. 二叉搜索树的后序遍历序列</strong></td>
+<td align="center">根节点位于最右边，找到第一个大于根节点的索引，其到根节点之间的所有节点为右子树，其之前的所有节点为左子树；若只有一个节点或右子树比根节点小则递归终止，否则继续递归dfs(左子树)&amp;&amp;dfs(右子树)。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 34. 二叉树中和为某一值的路径</strong></td>
+<td align="center">DFS。增加一个变量保存当前target-node.val的值，当该值为零且当前节点为叶子节点，将路径保存到结果列表。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 36. 二叉搜索树与双向链表</strong></td>
+<td align="center">中序遍历。遍历过程中保存上次遍历的节点并进行双向链表构建。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 37. 序列化二叉树</strong></td>
+<td align="center">层序遍历。通过两次层序遍历进行序列化和反序列化；其中反序列化过程可通过一个指针指向当前节点所对应的孩子节点。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树 BFS</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 54. 二叉搜索树的第k大节点</strong></td>
+<td align="center">二叉搜索树。对二叉搜索树进行中序遍历，可以得到一个从小到大的数组。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉搜索树</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 55 - I. 二叉树的深度</strong></td>
+<td align="center">一BFS解法。记录层次遍历的层数。二DFS解法。当前节点深度等于其max(左孩子深度，右孩子深度)+1。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 55 - II. 平衡二叉树</strong></td>
+<td align="center">DFS。遍历当前树并返回左右子树深度，若左右子树深度&gt;1，说明不为平衡二叉树。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 68 - I. 二叉搜索树的最近公共祖先</strong></td>
+<td align="center">利用二叉搜索树左节点&lt;根&lt;右特点，不断缩小范围。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉搜索树</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 68 - II. 二叉树的最近公共祖先</strong></td>
+<td align="center">递归终止条件是找到p或q或二者都没找到；若左右子树都未找到，返回None；若左子树和右子树都可以找到，则该节点是根节点；若右子树先找到，则左子树先找到的节点为根节点；若左子树先找到，则右子树先找到的节点为根节点。</td>
+<td align="center">O(logn)</td>
+<td align="center">二叉树</td>
 </tr>
 </tbody></table>
-<h5 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h5><p>模版</p>
-<pre><code>// 初始化mark
+<h5 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h5><pre class=" language-伪代码"><code class="language-伪代码">// DFS模版
+// 初始化mark
 def dfs(u, i, j):
     // 终止条件
     dx, dy = [1, -1, 0, 0], [0, 0, 1, -1]
@@ -776,26 +923,14 @@ def dfs(u, i, j):
 <td align="center">DFS</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 38. 字符串的排列</strong></td>
+<td align="center">DFS，使用数组mark标记走过的路径，函数传递u作为终止条件。</td>
+<td align="center">O(n*n!)</td>
+<td align="center">DFS</td>
 </tr>
 </tbody></table>
-<h5 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h5><p>模版</p>
-<pre><code>// 初始化队列
+<h5 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h5><pre class=" language-伪代码"><code class="language-伪代码">// BFS模版
+// 初始化队列
 while len(q):
     t = q.pop()
     // 扩展t，入队列
@@ -814,30 +949,6 @@ while len(q):
 <td align="center">// 初始化队列 while q.qsize(): t = q.get() // 扩展t，入队列。</td>
 <td align="center">$O(n^{2})$</td>
 <td align="center">BFS 数组</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
 </tr>
 </tbody></table>
 <h5 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h5><table>
@@ -874,16 +985,50 @@ while len(q):
 <td align="center">DP</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
-<td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center"><strong>剑指 Offer 42. 连续子数组的最大和</strong></td>
+<td align="center">DP。①状态表达 f[i] 当前子数组的最大和。②状态转移 f[i] = max(f[i-1]+arr[i], arr[i]) (集合中只有取与不取两个状态)。</td>
+<td align="center">O(n)</td>
+<td align="center">DP</td>
 </tr>
 <tr>
-<td align="center"><strong>-</strong></td>
+<td align="center"><strong>剑指 Offer 46. 把数字翻译成字符串</strong></td>
+<td align="center">DP。①动态表达 f(i) i个字符前有多少种不同的翻译。②动态转换 f(i) = f(i-1)+f(i-2)或f(i-1) （PS:新增的字符不满足成双的情况对增加翻译数量无益）</td>
+<td align="center">O(n)</td>
+<td align="center">DP</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 47. 礼物的最大价值</strong></td>
+<td align="center">DP。①动态表达 f(i, j)，第i,j步能拿到的最大价值。②动态转移 f(i,j)=max(f(i-1,j), f(i,j-1))+arr[i][j]。</td>
+<td align="center">$O(n^{2})$</td>
+<td align="center">DP</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 49. 丑数</strong></td>
+<td align="center">DP+三指针。①状态表示 f(i)第i个丑数对应的数字。②状态转移 f(i)=min(f(a)*2,f(b)*3,f(c)*5)，其中a、b、c是从头开始移动的三个指针，abc中一定存在一个或多个恰好大于f[i-1]的数。</td>
+<td align="center">O(n)</td>
+<td align="center">DP 三指针</td>
+</tr>
+<tr>
+<td align="center"><strong>剑指 Offer 60. n个骰子的点数</strong></td>
+<td align="center">①状态表达。f(i)点数集合i出现的概率。②状态转移。t=[0, 1.0/6,…], temp(i+j)+=f(i)*arr(j) f=temp。</td>
 <td align="center">-</td>
-<td align="center">-</td>
-<td align="center">-</td>
+<td align="center">DP</td>
+</tr>
+</tbody></table>
+<h5 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h5><table>
+<thead>
+<tr>
+<th align="center">Alg</th>
+<th align="center">思想</th>
+<th align="center">时间复杂度</th>
+<th align="center">Tag</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>剑指 Offer 63. 股票的最大利润</strong></td>
+<td align="center">遍历数组，res=max(res, 当前元素-之前元素的最小值)。</td>
+<td align="center">O(n)</td>
+<td align="center">数组</td>
 </tr>
 </tbody></table>
 
